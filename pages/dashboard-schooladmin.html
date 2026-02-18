@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body class="dashboard">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="nav-brand">School System</a>
+            <ul class="nav-menu">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#students">Students</a></li>
+                <li><a href="#teachers">Teachers</a></li>
+                <li><a href="#classes">Classes</a></li>
+                <li><a href="#reports">Reports</a></li>
+            </ul>
+            <div class="nav-user">
+                <span class="user-badge" id="userRole">School Admin</span>
+                <span id="userName">Loading...</span>
+                <button id="logoutBtn" class="btn btn-danger">Logout</button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Dashboard Content -->
+    <div class="dashboard-content">
+        <div class="container">
+            <h1>School Admin Dashboard</h1>
+            <p>Manage your school's students, teachers, and classes</p>
+            
+            <!-- Statistics -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon">👨‍🎓</div>
+                    <div class="stat-info">
+                        <h3 id="totalStudents">0</h3>
+                        <p>Total Students</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">👨‍🏫</div>
+                    <div class="stat-info">
+                        <h3 id="totalTeachers">0</h3>
+                        <p>Total Teachers</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-info">
+                        <h3 id="totalClasses">0</h3>
+                        <p>Active Classes</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-info">
+                        <h3 id="attendance">0%</h3>
+                        <p>Attendance Rate</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Students -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Students</h2>
+                </div>
+                <div class="table-container" id="studentsTable">
+                    <p>Loading students...</p>
+                </div>
+            </div>
+            
+            <!-- Teachers -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Teachers</h2>
+                </div>
+                <div class="table-container" id="teachersTable">
+                    <p>Loading teachers...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/utils.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            Dashboard.init(Auth.ROLES.SCHOOL_ADMIN);
+            
+            loadStatistics();
+            loadStudents();
+            loadTeachers();
+        });
+        
+        async function loadStatistics() {
+            document.getElementById('totalStudents').textContent = '150';
+            document.getElementById('totalTeachers').textContent = '12';
+            document.getElementById('totalClasses').textContent = '8';
+            document.getElementById('attendance').textContent = '94%';
+        }
+        
+        async function loadStudents() {
+            const container = document.getElementById('studentsTable');
+            const students = [
+                { name: 'Emily Johnson', grade: '10', class: 'A', status: 'Active' },
+                { name: 'Michael Smith', grade: '9', class: 'B', status: 'Active' },
+                { name: 'Sarah Davis', grade: '11', class: 'A', status: 'Active' }
+            ];
+            
+            const columns = [
+                { label: 'Student Name', field: 'name' },
+                { label: 'Grade', field: 'grade' },
+                { label: 'Class', field: 'class' },
+                { label: 'Status', field: 'status' }
+            ];
+            
+            container.innerHTML = Dashboard.renderTable(columns, students);
+        }
+        
+        async function loadTeachers() {
+            const container = document.getElementById('teachersTable');
+            const teachers = [
+                { name: 'Dr. Robert Wilson', subject: 'Mathematics', classes: '3', status: 'Active' },
+                { name: 'Ms. Lisa Anderson', subject: 'English', classes: '4', status: 'Active' },
+                { name: 'Mr. James Taylor', subject: 'Science', classes: '2', status: 'Active' }
+            ];
+            
+            const columns = [
+                { label: 'Teacher Name', field: 'name' },
+                { label: 'Subject', field: 'subject' },
+                { label: 'Classes', field: 'classes' },
+                { label: 'Status', field: 'status' }
+            ];
+            
+            container.innerHTML = Dashboard.renderTable(columns, teachers);
+        }
+    </script>
+</body>
+</html>

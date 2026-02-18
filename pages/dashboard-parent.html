@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Dashboard</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body class="dashboard">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="nav-brand">School System</a>
+            <ul class="nav-menu">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#children">My Children</a></li>
+                <li><a href="#grades">Grades</a></li>
+                <li><a href="#attendance">Attendance</a></li>
+                <li><a href="#messages">Messages</a></li>
+            </ul>
+            <div class="nav-user">
+                <span class="user-badge" id="userRole">Parent</span>
+                <span id="userName">Loading...</span>
+                <button id="logoutBtn" class="btn btn-danger">Logout</button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Dashboard Content -->
+    <div class="dashboard-content">
+        <div class="container">
+            <h1>Parent Dashboard</h1>
+            <p>Monitor your children's academic progress and activities</p>
+            
+            <!-- Statistics -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon">👨‍👩‍👧‍👦</div>
+                    <div class="stat-info">
+                        <h3 id="totalChildren">0</h3>
+                        <p>My Children</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-info">
+                        <h3 id="avgGrade">0%</h3>
+                        <p>Average Grade</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <h3 id="attendance">0%</h3>
+                        <p>Attendance Rate</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✉️</div>
+                    <div class="stat-info">
+                        <h3 id="unreadMessages">0</h3>
+                        <p>Unread Messages</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Children -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">My Children</h2>
+                </div>
+                <div class="table-container" id="childrenTable">
+                    <p>Loading children...</p>
+                </div>
+            </div>
+            
+            <!-- Recent Grades -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Recent Grades</h2>
+                </div>
+                <div class="table-container" id="gradesTable">
+                    <p>Loading grades...</p>
+                </div>
+            </div>
+            
+            <!-- Upcoming Events -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Upcoming Events</h2>
+                </div>
+                <div class="table-container" id="eventsTable">
+                    <p>Loading events...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/utils.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            Dashboard.init(Auth.ROLES.PARENT);
+            
+            loadStatistics();
+            loadChildren();
+            loadGrades();
+            loadEvents();
+        });
+        
+        async function loadStatistics() {
+            document.getElementById('totalChildren').textContent = '2';
+            document.getElementById('avgGrade').textContent = '92%';
+            document.getElementById('attendance').textContent = '96%';
+            document.getElementById('unreadMessages').textContent = '3';
+        }
+        
+        async function loadChildren() {
+            const container = document.getElementById('childrenTable');
+            const children = [
+                { name: 'Emma Johnson', grade: '10', class: 'A', teacher: 'Ms. Anderson', avgGrade: '94%' },
+                { name: 'Liam Johnson', grade: '8', class: 'B', teacher: 'Mr. Wilson', avgGrade: '90%' }
+            ];
+            
+            const columns = [
+                { label: 'Name', field: 'name' },
+                { label: 'Grade', field: 'grade' },
+                { label: 'Class', field: 'class' },
+                { label: 'Teacher', field: 'teacher' },
+                { label: 'Average Grade', field: 'avgGrade' }
+            ];
+            
+            container.innerHTML = Dashboard.renderTable(columns, children);
+        }
+        
+        async function loadGrades() {
+            const container = document.getElementById('gradesTable');
+            const grades = [
+                { student: 'Emma Johnson', subject: 'Mathematics', assignment: 'Quiz 5', grade: 'A', date: '2024-02-15' },
+                { student: 'Emma Johnson', subject: 'English', assignment: 'Essay 2', grade: 'A-', date: '2024-02-14' },
+                { student: 'Liam Johnson', subject: 'Science', assignment: 'Lab Report 3', grade: 'B+', date: '2024-02-13' }
+            ];
+            
+            const columns = [
+                { label: 'Student', field: 'student' },
+                { label: 'Subject', field: 'subject' },
+                { label: 'Assignment', field: 'assignment' },
+                { label: 'Grade', field: 'grade' },
+                { label: 'Date', field: 'date', render: (row) => formatDate(row.date) }
+            ];
+            
+            container.innerHTML = Dashboard.renderTable(columns, grades);
+        }
+        
+        async function loadEvents() {
+            const container = document.getElementById('eventsTable');
+            const events = [
+                { event: 'Parent-Teacher Conference', date: '2024-03-01', time: '3:00 PM', location: 'Room 205' },
+                { event: 'Science Fair', date: '2024-03-15', time: '10:00 AM', location: 'Main Hall' },
+                { event: 'Spring Break', date: '2024-03-20', time: 'All Day', location: 'N/A' }
+            ];
+            
+            const columns = [
+                { label: 'Event', field: 'event' },
+                { label: 'Date', field: 'date', render: (row) => formatDate(row.date) },
+                { label: 'Time', field: 'time' },
+                { label: 'Location', field: 'location' }
+            ];
+            
+            container.innerHTML = Dashboard.renderTable(columns, events);
+        }
+    </script>
+</body>
+</html>
