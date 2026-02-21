@@ -3,231 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Admin Dashboard</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <style>
-        .section-title {
-            color: #333;
-            margin-top: 30px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-        }
-        .table-container {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            overflow-x: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th {
-            background: #f5f5f5;
-            padding: 12px;
-            text-align: left;
-            font-weight: bold;
-            color: #333;
-            border-bottom: 2px solid #ddd;
-        }
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-        }
-        tr:hover {
-            background: #f9f9f9;
-        }
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #999;
-        }
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
-        .status-badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-            color: white;
-        }
-        .status-badge.active {
-            background: #4CAF50;
-        }
-        .status-badge.inactive {
-            background: #999;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal.active {
-            display: flex;
-        }
-        .modal-content {
-            background: white;
-            border-radius: 8px;
-            padding: 30px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-    </style>
+    <title>School Admin Dashboard - School Management System</title>
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/layout.css">
 </head>
-<body class="dashboard">
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-content">
-            <a href="#" class="nav-brand">School System</a>
-            <ul class="nav-menu">
-                <li><a href="#overview">Overview</a></li>
-                <li><a href="#students">Students</a></li>
-                <li><a href="#teachers">Teachers</a></li>
-                <li><a href="#classes">Classes</a></li>
-                <li><a href="#schedule">Schedule</a></li>
-                <li><a href="#settings">Settings</a></li>
-            </ul>
-            <div class="nav-user">
-                <span class="user-badge" id="userRole">School Admin</span>
-                <span id="userName">Loading...</span>
-                <button id="logoutBtn" class="btn btn-danger">Logout</button>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <img class="sidebar-brand-logo" data-school-logo alt="School Logo" style="display:none;" />
+                <span class="sidebar-brand-text" data-school-name>School</span>
             </div>
-        </div>
-    </nav>
-    
-    <!-- Dashboard Content -->
-    <div class="dashboard-content">
-        <div class="container">
-            <h1>School Admin Dashboard</h1>
-            <p>Manage your school's students, teachers, classes, and settings</p>
-            
-            <!-- Statistics -->
-            <div class="stats-container">
-                <div class="stat-card">
-                    <div class="stat-icon">👨‍🎓</div>
-                    <div class="stat-info">
-                        <h3 id="totalStudents">0</h3>
-                        <p>Total Students</p>
+
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-section">
+                    <div class="sidebar-nav-label">Main</div>
+                    <ul class="sidebar-nav-list">
+                        <li class="sidebar-nav-item"><a href="dashboard-schooladmin.html" class="sidebar-nav-link active"><span class="sidebar-nav-text">Dashboard</span></a></li>
+                        <li class="sidebar-nav-item"><a href="schooladmin-students.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Students</span></a></li>
+                        <li class="sidebar-nav-item"><a href="schooladmin-teachers.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Teachers</span></a></li>
+                        <li class="sidebar-nav-item"><a href="schooladmin-classes.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Classes</span></a></li>
+                        <li class="sidebar-nav-item"><a href="schooladmin-schedule.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Schedule</span></a></li>
+                        <li class="sidebar-nav-item"><a href="schooladmin-settings.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Settings</span></a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-user" data-dropdown>
+                    <img src="" alt="Profile" class="avatar" data-user-avatar style="display:none;">
+                    <div class="sidebar-user-info">
+                        <div class="sidebar-user-name" id="userName">School Admin</div>
+                        <div class="sidebar-user-role">School Admin</div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">👨‍🏫</div>
-                    <div class="stat-info">
-                        <h3 id="totalTeachers">0</h3>
-                        <p>Total Teachers</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">🏫</div>
-                    <div class="stat-info">
-                        <h3 id="totalClasses">0</h3>
-                        <p>Total Classes</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">📚</div>
-                    <div class="stat-info">
-                        <h3 id="totalCourses">0</h3>
-                        <p>Total Courses</p>
-                    </div>
+                <div class="dropdown-menu" style="display: none;">
+                    <a href="#" class="dropdown-item">Profile</a>
+                    <a href="#" class="dropdown-item">Settings</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="login-new.html" class="dropdown-item">Logout</a>
                 </div>
             </div>
-            
-            <!-- Students Section -->
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h2 class="section-title">Students</h2>
-                <button class="btn btn-primary" id="addStudentBtn">+ Add Student</button>
+        </aside>
+
+        <main class="main-content">
+            <div class="topbar">
+                <button class="topbar-toggle"><svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/></svg></button>
+                <div class="topbar-breadcrumb"><span class="topbar-breadcrumb-current">Dashboard</span></div>
+                <div class="topbar-search"><svg class="topbar-search-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/></svg><input type="text" class="topbar-search-input" placeholder="Search students, teachers..."></div>
+                <div class="topbar-actions">
+                    <button class="btn btn-ghost" id="logoutBtn">Logout</button>
+                </div>
             </div>
-            <div class="table-container" id="studentsContainer">
-                <div class="loading-spinner">Loading students...</div>
+
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h1 class="page-title">School Admin Dashboard</h1>
+                    <p class="page-subtitle">Manage students, teachers, classes, and schedules.</p>
+                    <div class="page-actions">
+                        <button class="btn btn-primary" id="addStudentBtn">Add Student</button>
+                        <button class="btn btn-outline" id="addTeacherBtn">Add Teacher</button>
+                        <button class="btn btn-outline" id="addClassBtn">Add Class</button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon primary">👨‍🎓</div><div class="stat-content"><div class="stat-label">Total Students</div><div class="stat-value" id="totalStudents">—</div></div></div>
+                    <div class="stat-card"><div class="stat-icon success">👨‍🏫</div><div class="stat-content"><div class="stat-label">Total Teachers</div><div class="stat-value" id="totalTeachers">—</div></div></div>
+                    <div class="stat-card"><div class="stat-icon warning">🏫</div><div class="stat-content"><div class="stat-label">Total Classes</div><div class="stat-value" id="totalClasses">—</div></div></div>
+                    <div class="stat-card"><div class="stat-icon error">📚</div><div class="stat-content"><div class="stat-label">Total Courses</div><div class="stat-value" id="totalCourses">—</div></div></div>
+                </div>
+
+                <div class="grid grid-cols-2">
+                    <div class="card">
+                        <div class="card-header"><h3 class="card-title">Students</h3></div>
+                        <div class="card-body" id="studentsContainer"><div class="empty-state">Loading students...</div></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3 class="card-title">Teachers</h3></div>
+                        <div class="card-body" id="teachersContainer"><div class="empty-state">Loading teachers...</div></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2" style="margin-top: var(--spacing-6);">
+                    <div class="card">
+                        <div class="card-header"><h3 class="card-title">Classes</h3></div>
+                        <div class="card-body" id="classesContainer"><div class="empty-state">Loading classes...</div></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3 class="card-title">Weekly Schedule</h3></div>
+                        <div class="card-body" id="scheduleContainer"><div class="empty-state">Loading schedule...</div></div>
+                    </div>
+                </div>
             </div>
-            
-            <!-- Teachers Section -->
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h2 class="section-title">Teachers</h2>
-                <button class="btn btn-primary" id="addTeacherBtn">+ Add Teacher</button>
-            </div>
-            <div class="table-container" id="teachersContainer">
-                <div class="loading-spinner">Loading teachers...</div>
-            </div>
-            
-            <!-- Classes Section -->
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h2 class="section-title">Classes</h2>
-                <button class="btn btn-primary" id="addClassBtn">+ Add Class</button>
-            </div>
-            <div class="table-container" id="classesContainer">
-                <div class="loading-spinner">Loading classes...</div>
-            </div>
-            
-            <!-- Schedule Section -->
-            <h2 class="section-title">Weekly Schedule</h2>
-            <div class="table-container" id="scheduleContainer">
-                <div class="loading-spinner">Loading schedule...</div>
-            </div>
-        </div>
+        </main>
     </div>
-    
-    <!-- Add Student Modal -->
-    <div id="addStudentModal" class="modal">
-        <div class="modal-content">
-            <h2>Add New Student</h2>
+
+    <div id="addStudentModal" class="modal" style="display:none;">
+        <div class="modal-header"><h3 class="modal-title">Add New Student</h3><button class="modal-close">&times;</button></div>
+        <div class="modal-body">
             <form id="studentForm">
-                <div class="form-group">
-                    <label>First Name</label>
-                    <input type="text" required>
-                </div>
-                <div class="form-group">
-                    <label>Last Name</label>
-                    <input type="text" required>
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" required>
-                </div>
-                <div class="form-group">
-                    <label>Grade Level</label>
-                    <input type="text" required>
-                </div>
-                <div style="display: flex; gap: 10px;">
-                    <button type="submit" class="btn btn-primary">Add Student</button>
-                    <button type="button" class="btn btn-secondary" onclick="document.getElementById('addStudentModal').classList.remove('active')">Cancel</button>
-                </div>
+                <div class="form-group"><label class="form-label required">First Name</label><input type="text" class="form-input" required></div>
+                <div class="form-group"><label class="form-label required">Last Name</label><input type="text" class="form-input" required></div>
+                <div class="form-group"><label class="form-label required">Email</label><input type="email" class="form-input" required></div>
+                <div class="form-group"><label class="form-label required">Grade Level</label><input type="text" class="form-input" required></div>
             </form>
         </div>
+        <div class="modal-footer"><button class="btn btn-ghost" data-modal-cancel>Cancel</button><button class="btn btn-primary" data-student-submit>Add Student</button></div>
     </div>
-    
+
     <script src="../js/config.js"></script>
     <script src="../js/utils.js"></script>
-    <script src="../js/auth.js"></script>
     <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/ui-components.js"></script>
+    <script src="../js/tenant-theme.js"></script>
     <script src="../js/pages/schooladmin-dashboard.js"></script>
 </body>
 </html>

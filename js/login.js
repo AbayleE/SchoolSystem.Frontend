@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitBtn.textContent = 'Login';
             }
         } catch (error) {
-            this.showPopover("An error occurred. Please try again.");
+           // this.showPopover("An error occurred. Please try again.");
             showError('errorMessage', 'An error occurred. Please try again.');
             submitBtn.disabled = false;
             submitBtn.textContent = 'Login';

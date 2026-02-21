@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - School Management System</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <style>
+        body { margin: 0; padding: 0; background-color: var(--color-bg-secondary); }
+        .navbar { background-color: var(--color-bg-primary); box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: 100; }
+        .navbar-container { max-width: 1400px; margin: 0 auto; padding: var(--spacing-4) var(--spacing-6); display: flex; justify-content: space-between; align-items: center; }
+        .navbar-brand { display: flex; align-items: center; gap: var(--spacing-3); text-decoration: none; color: var(--color-text-primary); }
+        .navbar-brand-text { font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); color: var(--color-primary); }
+        .navbar-menu { display: flex; gap: var(--spacing-6); align-items: center; list-style: none; margin: 0; padding: 0; }
+        .navbar-link { text-decoration: none; color: var(--color-text-secondary); font-weight: var(--font-weight-medium); font-size: var(--font-size-sm); transition: color var(--transition-fast); }
+        .navbar-link:hover { color: var(--color-primary); }
+        .navbar-actions { display: flex; gap: var(--spacing-3); }
+        .hero { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); color: var(--color-text-inverse); padding: var(--spacing-12) var(--spacing-6); text-align: center; }
+        .hero-container { max-width: 800px; margin: 0 auto; }
+        .hero h1 { font-family: var(--font-family-heading); font-size: var(--font-size-4xl); font-weight: var(--font-weight-bold); margin: 0; line-height: var(--line-height-tight); }
+        .content-section { max-width: 1400px; margin: 0 auto; padding: var(--spacing-12) var(--spacing-6); }
+        .section-title { margin-bottom: var(--spacing-8); }
+        .section-title h2 { font-family: var(--font-family-heading); font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); color: var(--color-text-primary); margin: 0 0 var(--spacing-3) 0; }
+        .section-subtitle { color: var(--color-text-secondary); font-size: var(--font-size-base); line-height: var(--line-height-relaxed); margin: 0; }
+        .story-text { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-8); margin-bottom: var(--spacing-12); }
+        .story-paragraph { color: var(--color-text-secondary); line-height: var(--line-height-relaxed); font-size: var(--font-size-base); margin: 0; }
+        .grid-2,.grid-4,.grid-6 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--spacing-6); }
+        .card { background: var(--color-bg-primary); border-radius: var(--radius-lg); padding: var(--spacing-6); box-shadow: var(--shadow-md); transition: transform var(--transition-fast), box-shadow var(--transition-fast); }
+        .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .card h3 { font-family: var(--font-family-heading); font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin: 0 0 var(--spacing-3) 0; }
+        .card p { color: var(--color-text-secondary); font-size: var(--font-size-sm); line-height: var(--line-height-relaxed); margin: 0; }
+        .value-icon { font-size: 2rem; margin-bottom: var(--spacing-3); }
+        .team-card { text-align: center; }
+        .team-avatar { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%); margin: 0 auto var(--spacing-4); }
+        .team-card h4 { font-family: var(--font-family-heading); font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin: 0 0 var(--spacing-2) 0; }
+        .team-role { color: var(--color-primary); font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); margin: 0; }
+        .facility-card { background: var(--color-bg-primary); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md); transition: transform var(--transition-fast), box-shadow var(--transition-fast); }
+        .facility-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .facility-icon { font-size: 3rem; background: linear-gradient(135deg, var(--color-primary-lighter) 0%, var(--color-gray-100) 100%); padding: var(--spacing-6); text-align: center; }
+        .facility-content { padding: var(--spacing-4); }
+        .facility-content h4 { font-family: var(--font-family-heading); font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin: 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-6); }
+        .stat-card { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); color: var(--color-text-inverse); border-radius: var(--radius-lg); padding: var(--spacing-8); text-align: center; box-shadow: var(--shadow-md); }
+        .stat-number { font-family: var(--font-family-heading); font-size: var(--font-size-4xl); font-weight: var(--font-weight-bold); margin: 0 0 var(--spacing-2) 0; }
+        .stat-label { font-size: var(--font-size-lg); font-weight: var(--font-weight-medium); margin: 0; opacity: 0.95; }
+        .cta-section { background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%); color: var(--color-text-inverse); padding: var(--spacing-12) var(--spacing-6); text-align: center; margin-top: var(--spacing-12); }
+        .cta-container { max-width: 600px; margin: 0 auto; }
+        .cta-section h2 { font-family: var(--font-family-heading); font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); margin: 0 0 var(--spacing-4) 0; }
+        .cta-section p { font-size: var(--font-size-lg); margin: 0 0 var(--spacing-6) 0; opacity: 0.95; }
+        .footer { background-color: var(--color-text-primary); color: var(--color-text-inverse); padding: var(--spacing-12) var(--spacing-6); margin-top: var(--spacing-16); }
+        .footer-container { max-width: 1400px; margin: 0 auto; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-8); margin-bottom: var(--spacing-8); }
+        .footer-section h4 { font-family: var(--font-family-heading); font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); margin: 0 0 var(--spacing-4) 0; }
+        .footer-section ul { list-style: none; margin: 0; padding: 0; }
+        .footer-section li { margin-bottom: var(--spacing-3); }
+        .footer-section a { color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: var(--font-size-sm); transition: color var(--transition-fast); }
+        .footer-section a:hover { color: var(--color-text-inverse); }
+        .footer-divider { border-top: 1px solid rgba(255, 255, 255, 0.2); margin: var(--spacing-6) 0; }
+        .footer-bottom { text-align: center; font-size: var(--font-size-sm); color: rgba(255, 255, 255, 0.7); padding-top: var(--spacing-6); }
+        @media (max-width: 768px) {
+            .navbar-container { flex-direction: column; gap: var(--spacing-4); }
+            .navbar-menu { flex-direction: column; gap: var(--spacing-4); width: 100%; }
+            .hero h1 { font-size: var(--font-size-2xl); }
+            .grid-2,.grid-4,.grid-6 { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .stat-card { padding: var(--spacing-6); }
+            .stat-number { font-size: var(--font-size-3xl); }
+        }
+        @supports (--css: variables) {
+            :root { --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index-home.html" class="navbar-brand">
+                <span class="navbar-brand-text">🎓 School System</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="index-home.html" class="navbar-link">Home</a></li>
+                <li><a href="about-us.html" class="navbar-link">About</a></li>
+                <li><a href="apply.html" class="navbar-link">Apply</a></li>
+                <li><a href="contact.html" class="navbar-link">Contact</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <a href="pages/login-new.html" class="btn btn-outline">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-container">
+            <h1>About Our School</h1>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="section-title">
+            <h2>Our Story</h2>
+        </div>
+        <div class="story-text">
+            <p class="story-paragraph">Founded with a vision to transform education, our school has been a beacon of academic excellence and holistic development for over three decades. We believe that education extends beyond textbooks and classrooms, shaping young minds into responsible global citizens.</p>
+            <p class="story-paragraph">Our journey began with a simple yet powerful mission: to provide quality education accessible to deserving students. Today, we stand proud as one of the leading educational institutions, nurturing thousands of students who have gone on to excel in their chosen fields.</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="section-title">
+            <h2>Mission & Vision</h2>
+        </div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>🎯 Our Mission</h3>
+                <p>To deliver comprehensive, quality education that develops students' academic, social, emotional, and physical capabilities, preparing them to become responsible citizens and lifelong learners in an ever-changing world.</p>
+            </div>
+            <div class="card">
+                <h3>✨ Our Vision</h3>
+                <p>To be a globally recognized institution that empowers students with knowledge, critical thinking, and character, fostering innovation, excellence, and ethical leadership for societal advancement.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="section-title">
+            <h2>Core Values</h2>
+        </div>
+        <div class="grid-4">
+            <div class="card">
+                <div class="value-icon">📚</div>
+                <h3>Excellence</h3>
+                <p>Pursuing the highest standards in academics, character, and conduct</p>
+            </div>
+            <div class="card">
+                <div class="value-icon">🤝</div>
+                <h3>Integrity</h3>
+                <p>Building trust through honest, ethical, and transparent practices</p>
+            </div>
+            <div class="card">
+                <div class="value-icon">🌍</div>
+                <h3>Inclusivity</h3>
+                <p>Celebrating diversity and ensuring equal opportunities for all</p>
+            </div>
+            <div class="card">
+                <div class="value-icon">💡</div>
+                <h3>Innovation</h3>
+                <p>Embracing creativity and forward-thinking approaches to education</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="section-title">
+            <h2>Leadership Team</h2>
+            <p class="section-subtitle">Meet the visionary leaders steering our institution</p>
+        </div>
+        <div class="grid-4">
+            <div class="card team-card">
+                <div class="team-avatar">👨‍💼</div>
+                <h4>Dr. Joseph Kumssa</h4>
+                <p class="team-role">Principal</p>
+            </div>
+            <div class="card team-card">
+                <div class="team-avatar">👩‍💼</div>
+                <h4>Dr. Almaz Haile</h4>
+                <p class="team-role">Vice Principal</p>
+            </div>
+            <div class="card team-card">
+                <div class="team-avatar">👨‍🏫</div>
+                <h4>Prof. Abebe Mulu</h4>
+                <p class="team-role">Academic Director</p>
+            </div>
+            <div class="card team-card">
+                <div class="team-avatar">👩‍🏫</div>
+                <h4>Ms. Tigist Worku</h4>
+                <p class="team-role">Student Affairs Head</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="section-title">
+            <h2>Our Facilities</h2>
+            <p class="section-subtitle">World-class infrastructure supporting quality education</p>
+        </div>
+        <div class="grid-6">
+            <div class="facility-card">
+                <div class="facility-icon">🏫</div>
+                <div class="facility-content"><h4>Modern Classrooms</h4></div>
+            </div>
+            <div class="facility-card">
+                <div class="facility-icon">🔬</div>
+                <div class="facility-content"><h4>Science Labs</h4></div>
+            </div>
+            <div class="facility-card">
+                <div class="facility-icon">💻</div>
+                <div class="facility-content"><h4>Computer Labs</h4></div>
+            </div>
+            <div class="facility-card">
+                <div class="facility-icon">📚</div>
+                <div class="facility-content"><h4>Library</h4></div>
+            </div>
+            <div class="facility-card">
+                <div class="facility-icon">🏃</div>
+                <div class="facility-content"><h4>Sports Complex</h4></div>
+            </div>
+            <div class="facility-card">
+                <div class="facility-icon">🎨</div>
+                <div class="facility-content"><h4>Arts Studio</h4></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="section-title">
+            <h2>By The Numbers</h2>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <p class="stat-number">2500+</p>
+                <p class="stat-label">Students</p>
+            </div>
+            <div class="stat-card">
+                <p class="stat-number">150+</p>
+                <p class="stat-label">Faculty Members</p>
+            </div>
+            <div class="stat-card">
+                <p class="stat-number">95%</p>
+                <p class="stat-label">Pass Rate</p>
+            </div>
+            <div class="stat-card">
+                <p class="stat-number">30+</p>
+                <p class="stat-label">Years of Excellence</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2>Ready to Join Our Community?</h2>
+            <p>Become part of a legacy of excellence and transformation</p>
+            <a href="apply.html" class="btn btn-primary">Apply Now</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>About School</h4>
+                    <ul>
+                        <li><a href="about-us.html">Our Mission</a></li>
+                        <li><a href="about-us.html">Our Story</a></li>
+                        <li><a href="about-us.html">Leadership</a></li>
+                        <li><a href="about-us.html">Facilities</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="apply.html">Apply Now</a></li>
+                        <li><a href="#">Admissions FAQ</a></li>
+                        <li><a href="#">Programs</a></li>
+                        <li><a href="#">Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Disclaimer</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 School System. All rights reserved. | Empowering Education Globally</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/tenant-theme.js"></script>
+</body>
+</html>
+
