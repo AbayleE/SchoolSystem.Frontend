@@ -1,0 +1,56 @@
+/* Login Page Specific Styles */
+.login-box {
+    max-width: 450px;
+    margin: 50px auto;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.logo h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logo p {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+.form h2 {
+    text-align: center;
+    color: var(--dark-color);
+    margin-bottom: 25px;
+    font-size: 28px;
+}
+
+/* Register page specific */
+.register-info {
+    background: #e3f2fd;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.register-info p {
+    margin: 0;
+    color: #1976d2;
+    font-size: 14px;
+}

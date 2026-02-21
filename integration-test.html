@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Integration Test</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .test-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .test-section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        .test-section h2 {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+        .status-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .test-result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: var(--light-color);
+            font-family: monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .info-box {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .info-box h4 {
+            margin-top: 0;
+            color: #1976d2;
+        }
+        .test-button {
+            margin-top: 10px;
+        }
+        .config-display {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔌 Backend Integration Test</h1>
+        <p>Use this page to test if your frontend is properly connected to the backend API.</p>
+
+        <!-- Configuration Section -->
+        <div class="test-section">
+            <h2>⚙️ Current Configuration</h2>
+            <div class="config-display">
+                <strong>API Base URL:</strong> <span id="apiBaseUrl">Loading...</span>
+            </div>
+            <div class="info-box">
+                <h4>ℹ️ Configuration Note</h4>
+                <p>The API Base URL is defined in <code>js/config.js</code>. If you need to change it, update the <code>API_BASE_URL</code> constant.</p>
+            </div>
+        </div>
+
+        <!-- Connection Test -->
+        <div class="test-section">
+            <h2>🔗 Connection Test</h2>
+            <p>Test basic connectivity to the backend server.</p>
+            <button onclick="testConnection()" class="btn btn-primary test-button">Test Connection</button>
+            <div id="connectionResult" class="test-result" style="display: none;"></div>
+        </div>
+
+        <!-- Health Check -->
+        <div class="test-section">
+            <h2>💚 Health Check</h2>
+            <p>Check if the backend API is healthy and responding.</p>
+            <button onclick="testHealth()" class="btn btn-primary test-button">Check Health</button>
+            <div id="healthResult" class="test-result" style="display: none;"></div>
+        </div>
+
+        <!-- Authentication Test -->
+        <div class="test-section">
+            <h2>🔐 Authentication Test</h2>
+            <p>Test the login endpoint with credentials (this will fail if you don't have a valid user).</p>
+            <div class="form-group">
+                <label for="testEmail">Email:</label>
+                <input type="email" id="testEmail" value="test@example.com">
+            </div>
+            <div class="form-group">
+                <label for="testPassword">Password:</label>
+                <input type="password" id="testPassword" value="password123">
+            </div>
+            <button onclick="testAuth()" class="btn btn-primary test-button">Test Login</button>
+            <div id="authResult" class="test-result" style="display: none;"></div>
+        </div>
+
+        <!-- Token Verification -->
+        <div class="test-section">
+            <h2>🎫 Token Verification</h2>
+            <p>If you have a token from a previous login, test if it's still valid.</p>
+            <div class="config-display">
+                <strong>Current Token:</strong> <span id="currentToken">None</span>
+            </div>
+            <button onclick="testTokenVerification()" class="btn btn-primary test-button">Verify Token</button>
+            <button onclick="clearToken()" class="btn btn-secondary test-button">Clear Token</button>
+            <div id="tokenResult" class="test-result" style="display: none;"></div>
+        </div>
+
+        <!-- Integration Status -->
+        <div class="test-section">
+            <h2>📊 Integration Status Summary</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Status</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody id="statusTable">
+                    <tr>
+                        <td>Frontend Files</td>
+                        <td><span class="status-badge status-success">✅ Ready</span></td>
+                        <td>All HTML, CSS, JS files present</td>
+                    </tr>
+                    <tr>
+                        <td>API Client</td>
+                        <td><span class="status-badge status-success">✅ Ready</span></td>
+                        <td>API client configured and loaded</td>
+                    </tr>
+                    <tr>
+                        <td>Backend Connection</td>
+                        <td><span class="status-badge status-pending">⏳ Unknown</span></td>
+                        <td>Run tests above to verify</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="test-section">
+            <h2>🔧 Troubleshooting Guide</h2>
+            <div class="info-box">
+                <h4>Common Issues:</h4>
+                <ul>
+                    <li><strong>CORS Error:</strong> Configure CORS on your backend to allow requests from this origin</li>
+                    <li><strong>Connection Refused:</strong> Ensure your backend server is running on the configured URL</li>
+                    <li><strong>404 Not Found:</strong> Verify that the backend endpoints match the frontend expectations</li>
+                    <li><strong>401 Unauthorized:</strong> Check that credentials are correct and user exists in database</li>
+                </ul>
+            </div>
+            <p><strong>Need more help?</strong> Check the <a href="BACKEND_INTEGRATION.md">Backend Integration Guide</a> for detailed instructions.</p>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        // Display current configuration
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('apiBaseUrl').textContent = API_BASE_URL;
+            
+            // Check for existing token
+            const token = Auth.getToken();
+            if (token) {
+                document.getElementById('currentToken').textContent = token.substring(0, 50) + '...';
+            } else {
+                document.getElementById('currentToken').textContent = 'No token stored';
+            }
+        });
+
+        // Test basic connection
+        async function testConnection() {
+            const resultDiv = document.getElementById('connectionResult');
+            resultDiv.style.display = 'block';
+            resultDiv.textContent = 'Testing connection to ' + API_BASE_URL + '...\n\n';
+
+            try {
+                const response = await fetch(API_BASE_URL, {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                
+                resultDiv.textContent += '✅ Connection successful!\n';
+                resultDiv.textContent += 'Status: ' + response.status + ' ' + response.statusText + '\n';
+                resultDiv.textContent += 'CORS: Enabled\n';
+                
+                if (response.ok) {
+                    const data = await response.text();
+                    resultDiv.textContent += 'Response: ' + data.substring(0, 200) + '\n';
+                }
+            } catch (error) {
+                resultDiv.textContent += '❌ Connection failed!\n';
+                resultDiv.textContent += 'Error: ' + error.message + '\n\n';
+                resultDiv.textContent += 'Possible causes:\n';
+                resultDiv.textContent += '- Backend server is not running\n';
+                resultDiv.textContent += '- Backend URL is incorrect\n';
+                resultDiv.textContent += '- CORS is not configured on backend\n';
+                resultDiv.textContent += '- Network/firewall blocking connection\n';
+            }
+        }
+
+        // Test health endpoint
+        async function testHealth() {
+            const resultDiv = document.getElementById('healthResult');
+            resultDiv.style.display = 'block';
+            resultDiv.textContent = 'Checking backend health...\n\n';
+
+            try {
+                const response = await fetch(API_BASE_URL + '/health', {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.textContent += '✅ Backend is healthy!\n';
+                    resultDiv.textContent += JSON.stringify(data, null, 2);
+                } else {
+                    resultDiv.textContent += '⚠️ Backend responded but not healthy\n';
+                    resultDiv.textContent += 'Status: ' + response.status + '\n';
+                }
+            } catch (error) {
+                resultDiv.textContent += '❌ Health check failed!\n';
+                resultDiv.textContent += 'Error: ' + error.message + '\n';
+                resultDiv.textContent += '\nNote: If your backend doesn\'t have a /health endpoint, this is expected.\n';
+            }
+        }
+
+        // Test authentication
+        async function testAuth() {
+            const resultDiv = document.getElementById('authResult');
+            const email = document.getElementById('testEmail').value;
+            const password = document.getElementById('testPassword').value;
+            
+            resultDiv.style.display = 'block';
+            resultDiv.textContent = 'Testing login with credentials...\n\n';
+
+            try {
+                const response = await ApiClient.auth.login({ email, password });
+                
+                resultDiv.textContent += '✅ Login successful!\n\n';
+                resultDiv.textContent += 'Token received: ' + (response.token ? 'Yes' : 'No') + '\n';
+                resultDiv.textContent += 'User data:\n';
+                resultDiv.textContent += JSON.stringify(response.user, null, 2);
+                
+                if (response.token) {
+                    Auth.saveToken(response.token);
+                    if (response.user) {
+                        Auth.saveUserData(response.user);
+                    }
+                    resultDiv.textContent += '\n\n✅ Token saved to localStorage';
+                    document.getElementById('currentToken').textContent = response.token.substring(0, 50) + '...';
+                }
+            } catch (error) {
+                resultDiv.textContent += '❌ Login failed!\n\n';
+                resultDiv.textContent += 'Error: ' + JSON.stringify(error, null, 2) + '\n\n';
+                resultDiv.textContent += 'Possible causes:\n';
+                resultDiv.textContent += '- Invalid credentials\n';
+                resultDiv.textContent += '- User doesn\'t exist in database\n';
+                resultDiv.textContent += '- Backend login endpoint not implemented\n';
+                resultDiv.textContent += '- Backend endpoint path is different\n';
+            }
+        }
+
+        // Test token verification
+        async function testTokenVerification() {
+            const resultDiv = document.getElementById('tokenResult');
+            resultDiv.style.display = 'block';
+            
+            const token = Auth.getToken();
+            if (!token) {
+                resultDiv.textContent = '❌ No token found!\n\nPlease login first to get a token.';
+                return;
+            }
+
+            resultDiv.textContent = 'Verifying token...\n\n';
+
+            try {
+                const response = await ApiClient.auth.verifyToken();
+                
+                resultDiv.textContent += '✅ Token is valid!\n\n';
+                resultDiv.textContent += 'Response:\n';
+                resultDiv.textContent += JSON.stringify(response, null, 2);
+            } catch (error) {
+                resultDiv.textContent += '❌ Token verification failed!\n\n';
+                resultDiv.textContent += 'Error: ' + JSON.stringify(error, null, 2) + '\n\n';
+                resultDiv.textContent += 'The token may be expired or invalid.';
+            }
+        }
+
+        // Clear stored token
+        function clearToken() {
+            Auth.removeToken();
+            document.getElementById('currentToken').textContent = 'No token stored';
+            alert('Token cleared from localStorage');
+        }
+    </script>
+</body>
+</html>

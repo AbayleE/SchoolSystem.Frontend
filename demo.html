@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School System - Demo Gallery</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body {
+            background: white;
+            padding: 40px 20px;
+        }
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+        }
+        .intro {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #666;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .dashboard-preview {
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .dashboard-preview:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        .dashboard-preview img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .dashboard-info {
+            padding: 20px;
+            background: white;
+        }
+        .dashboard-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        .dashboard-info p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        .dashboard-info a {
+            text-decoration: none;
+        }
+        .feature-section {
+            margin-top: 50px;
+            padding: 30px;
+            background: var(--light-color);
+            border-radius: 10px;
+        }
+        .feature-section h2 {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .feature-item {
+            display: flex;
+            align-items: start;
+            gap: 15px;
+        }
+        .feature-icon {
+            font-size: 30px;
+            flex-shrink: 0;
+        }
+        .feature-content h4 {
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+        .feature-content p {
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>🎓 School System - Multi-Tenant Education Platform</h1>
+        <p class="intro">
+            A comprehensive school management system with role-based access control.<br>
+            Built with HTML, CSS, and JavaScript for seamless integration with backend APIs.
+        </p>
+
+        <h2 style="text-align: center; margin-bottom: 30px;">Role-Based Dashboards</h2>
+        <div class="dashboard-grid">
+            <div class="dashboard-preview">
+                <img src="" alt="System Owner Dashboard">
+                <div class="dashboard-info">
+                    <h3>🏢 System Owner</h3>
+                    <p>Manage all schools across the system, view system-wide statistics, and control user access.</p>
+                    <a href="pages/dashboard-systemowner.html" class="btn btn-primary">View Dashboard</a>
+                </div>
+            </div>
+
+            <div class="dashboard-preview">
+                <img src="" alt="School Admin Dashboard">
+                <div class="dashboard-info">
+                    <h3>🏫 School Admin</h3>
+                    <p>Oversee school operations, manage students and teachers, and monitor attendance.</p>
+                    <a href="pages/dashboard-schooladmin.html" class="btn btn-primary">View Dashboard</a>
+                </div>
+            </div>
+
+            <div class="dashboard-preview">
+                <img src="" alt="Manager Dashboard">
+                <div class="dashboard-info">
+                    <h3>💼 Manager</h3>
+                    <p>Manage departments, staff operations, and track tasks across the organization.</p>
+                    <a href="pages/dashboard-manager.html" class="btn btn-primary">View Dashboard</a>
+                </div>
+            </div>
+
+            <div class="dashboard-preview">
+                <img src="" alt="Teacher Dashboard">
+                <div class="dashboard-info">
+                    <h3>👨‍🏫 Teacher</h3>
+                    <p>Manage classes, grade assignments, and track student progress throughout the semester.</p>
+                    <a href="pages/dashboard-teacher.html" class="btn btn-primary">View Dashboard</a>
+                </div>
+            </div>
+
+            <div class="dashboard-preview">
+                <img src="" alt="Parent Dashboard">
+                <div class="dashboard-info">
+                    <h3>👨‍👩‍👧 Parent</h3>
+                    <p>Monitor children's academic progress, grades, attendance, and communicate with teachers.</p>
+                    <a href="pages/dashboard-parent.html" class="btn btn-primary">View Dashboard</a>
+                </div>
+            </div>
+
+            <div class="dashboard-preview">
+                <img src="" alt="Student Dashboard">
+                <div class="dashboard-info">
+                    <h3>👨‍🎓 Student</h3>
+                    <p>Access class schedules, submit assignments, check grades, and track attendance.</p>
+                    <a href="pages/dashboard-student.html" class="btn btn-primary">View Dashboard</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="feature-section">
+            <h2>Key Features</h2>
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon">🔐</div>
+                    <div class="feature-content">
+                        <h4>Secure Authentication</h4>
+                        <p>JWT-based authentication with role-based access control</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✉️</div>
+                    <div class="feature-content">
+                        <h4>Invitation-Based Registration</h4>
+                        <p>Users register only with valid invitation codes from admins</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🏢</div>
+                    <div class="feature-content">
+                        <h4>Multi-Tenant Support</h4>
+                        <p>Manage multiple schools within a single system</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎨</div>
+                    <div class="feature-content">
+                        <h4>Responsive Design</h4>
+                        <p>Works seamlessly on desktop, tablet, and mobile devices</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-content">
+                        <h4>Fast & Lightweight</h4>
+                        <p>Pure JavaScript with no heavy frameworks</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔌</div>
+                    <div class="feature-content">
+                        <h4>API Ready</h4>
+                        <p>Structured API client for easy backend integration</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="index.html" class="btn btn-primary" style="display: inline-block; width: auto;">Go to Login Page</a>
+            <a href="pages/register.html" class="btn btn-secondary" style="display: inline-block; width: auto; margin-left: 10px;">Register</a>
+        </div>
+    </div>
+</body>
+</html>

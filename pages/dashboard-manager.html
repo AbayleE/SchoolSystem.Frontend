@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Dashboard</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body class="dashboard">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="nav-brand">School System</a>
+            <ul class="nav-menu">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#departments">Departments</a></li>
+                <li><a href="#staff">Staff</a></li>
+                <li><a href="#reports">Reports</a></li>
+            </ul>
+            <div class="nav-user">
+                <span class="user-badge" id="userRole">Manager</span>
+                <span id="userName">Loading...</span>
+                <button id="logoutBtn" class="btn btn-danger">Logout</button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Dashboard Content -->
+    <div class="dashboard-content">
+        <div class="container">
+            <h1>Manager Dashboard</h1>
+            <p>Manage departments and staff operations</p>
+            
+            <!-- Statistics -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon">🏢</div>
+                    <div class="stat-info">
+                        <h3 id="totalDepartments">0</h3>
+                        <p>Departments</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <h3 id="totalStaff">0</h3>
+                        <p>Staff Members</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-info">
+                        <h3 id="pendingTasks">0</h3>
+                        <p>Pending Tasks</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <h3 id="completedTasks">0</h3>
+                        <p>Completed Tasks</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Departments -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Departments</h2>
+                </div>
+                <div class="table-container" id="departmentsTable">
+                    <p>Loading departments...</p>
+                </div>
+            </div>
+            
+            <!-- Staff Members -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Staff Members</h2>
+                </div>
+                <div class="table-container" id="staffTable">
+                    <p>Loading staff...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/utils.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            Dashboard.init(Auth.ROLES.MANAGER);
+            
+            loadStatistics();
+            loadDepartments();
+            loadStaff();
+        });
+        
+        async function loadStatistics() {
+            document.getElementById('totalDepartments').textContent = '5';
+            document.getElementById('totalStaff').textContent = '24';
+            document.getElementById('pendingTasks').textContent = '8';
+            document.getElementById('completedTasks').textContent = '45';
+        }
+        
+        async function loadDepartments() {
+            const container = document.getElementById('departmentsTable');
+            const departments = [
+                { name: 'Academic Affairs', head: 'Dr. Sarah Johnson', staff: '8', budget: '$125,000' },
+                { name: 'Student Services', head: 'Mr. John Davis', staff: '6', budget: '$95,000' },
+                { name: 'Administration', head: 'Ms. Emily Wilson', staff: '10', budget: '$150,000' }
+            ];
+            
+            const columns = [
+                { label: 'Department', field: 'name' },
+                { label: 'Department Head', field: 'head' },
+                { label: 'Staff', field: 'staff' },
+                { label: 'Budget', field: 'budget' }
+            ];
+            
+            container.innerHTML = Dashboard.renderTable(columns, departments);
+        }
+        
+        async function loadStaff() {
+            const container = document.getElementById('staffTable');
+            const staff = [
+                { name: 'Alice Cooper', department: 'Academic Affairs', position: 'Coordinator', status: 'Active' },
+                { name: 'Bob Martinez', department: 'Student Services', position: 'Counselor', status: 'Active' },
+                { name: 'Carol White', department: 'Administration', position: 'Assistant', status: 'Active' }
+            ];
+            
+            const columns = [
+                { label: 'Name', field: 'name' },
+                { label: 'Department', field: 'department' },
+                { label: 'Position', field: 'position' },
+                { label: 'Status', field: 'status' }
+            ];
+            
+            container.innerHTML = Dashboard.renderTable(columns, staff);
+        }
+    </script>
+</body>
+</html>
