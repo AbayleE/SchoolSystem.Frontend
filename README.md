@@ -2,6 +2,13 @@
 
 A multi-tenant school management system frontend built with HTML, CSS, and JavaScript.
 
+## ⚠️ Backend Integration Status
+
+**Currently NOT integrated with backend** - This frontend is ready for integration but requires a running backend server. 
+
+📖 **[Read the Integration Guide](BACKEND_INTEGRATION.md)** for complete setup instructions.  
+🔧 **[Test Integration](integration-test.html)** using the integration test page.
+
 ## Overview
 
 This is a comprehensive frontend application for managing schools, students, teachers, and administrative tasks. It features role-based access control and supports multiple user types with distinct dashboards and capabilities.
@@ -93,6 +100,20 @@ SchoolSystem.Frontend/
 
 - A modern web browser (Chrome, Firefox, Safari, Edge)
 - A backend API server (see SchoolSystem.Backend repository)
+- **Note**: The frontend requires a running backend to function properly
+
+### Backend Integration
+
+⚠️ **Important**: This frontend is currently **NOT integrated** with a live backend.
+
+To integrate with the backend:
+
+1. **Read the Integration Guide**: [BACKEND_INTEGRATION.md](BACKEND_INTEGRATION.md)
+2. **Test the Connection**: Open `integration-test.html` in your browser
+3. **Configure the API URL**: Update `js/config.js` if needed
+4. **Start your Backend**: Ensure SchoolSystem.Backend is running
+
+For detailed integration instructions, see [BACKEND_INTEGRATION.md](BACKEND_INTEGRATION.md).
 
 ### Installation
 
