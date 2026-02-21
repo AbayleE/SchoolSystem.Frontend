@@ -44,3 +44,4 @@ const CONFIG = {
 
 // Make config available globally
 window.APP_CONFIG = CONFIG;
+

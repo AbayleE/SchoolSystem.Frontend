@@ -5,6 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Owner Dashboard</title>
     <link rel="stylesheet" href="../css/main.css">
+    <style>
+        .section-title {
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background: #f5f5f5;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+            color: #333;
+            border-bottom: 2px solid #ddd;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        tr:hover {
+            background: #f9f9f9;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+        .status-badge.active {
+            background: #4CAF50;
+        }
+        .status-badge.inactive {
+            background: #999;
+        }
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .chart-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .chart-card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+    </style>
 </head>
 <body class="dashboard">
     <!-- Navigation -->
@@ -14,7 +88,8 @@
             <ul class="nav-menu">
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#schools">Schools</a></li>
-                <li><a href="#users">Users</a></li>
+                <li><a href="#analytics">Analytics</a></li>
+                <li><a href="#billing">Billing</a></li>
                 <li><a href="#settings">Settings</a></li>
             </ul>
             <div class="nav-user">
@@ -29,10 +104,10 @@
     <div class="dashboard-content">
         <div class="container">
             <h1>System Owner Dashboard</h1>
-            <p>Manage all schools, users, and system-wide settings</p>
+            <p>Manage all schools, users, analytics, and system-wide settings</p>
             
             <!-- Statistics -->
-            <div class="stats-container" id="statsContainer">
+            <div class="stats-container">
                 <div class="stat-card">
                     <div class="stat-icon">🏫</div>
                     <div class="stat-info">
@@ -55,118 +130,56 @@
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">👨‍🏫</div>
+                    <div class="stat-icon">💰</div>
                     <div class="stat-info">
-                        <h3 id="totalTeachers">0</h3>
-                        <p>Total Teachers</p>
+                        <h3 id="totalRevenue">$0</h3>
+                        <p>Total Revenue</p>
                     </div>
                 </div>
             </div>
             
-            <!-- Schools List -->
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Schools Management</h2>
-                </div>
-                <div class="table-container" id="schoolsTable">
-                    <p>Loading schools...</p>
-                </div>
+            <!-- Analytics Section -->
+            <h2 class="section-title">System Analytics</h2>
+            <div class="analytics-grid" id="analyticsContainer">
+                <div class="loading-spinner">Loading analytics...</div>
             </div>
             
-            <!-- Recent Users -->
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Recent Users</h2>
-                </div>
-                <div class="table-container" id="usersTable">
-                    <p>Loading users...</p>
-                </div>
+            <!-- Schools Section -->
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2 class="section-title">Schools</h2>
+                <button class="btn btn-primary" id="addSchoolBtn">+ Add School</button>
+            </div>
+            <div class="table-container" id="schoolsContainer">
+                <div class="loading-spinner">Loading schools...</div>
+            </div>
+            
+            <!-- Users Section -->
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2 class="section-title">Users</h2>
+                <button class="btn btn-primary" id="addUserBtn">+ Add User</button>
+            </div>
+            <div class="table-container" id="usersContainer">
+                <div class="loading-spinner">Loading users...</div>
+            </div>
+            
+            <!-- Billing Section -->
+            <h2 class="section-title">Billing & Subscriptions</h2>
+            <div class="table-container" id="billingContainer">
+                <div class="loading-spinner">Loading billing data...</div>
+            </div>
+            
+            <!-- Activity Log Section -->
+            <h2 class="section-title">Recent Activity</h2>
+            <div class="table-container" id="activityContainer">
+                <div class="loading-spinner">Loading activity log...</div>
             </div>
         </div>
     </div>
     
+    <script src="../js/config.js"></script>
     <script src="../js/utils.js"></script>
-    <script src="../js/api.js"></script>
     <script src="../js/auth.js"></script>
-    <script src="../js/dashboard.js"></script>
-    <script>
-        // System Owner Dashboard Script
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Initialize dashboard
-            Dashboard.init(Auth.ROLES.SYSTEM_OWNER);
-            
-            // Load statistics
-            loadStatistics();
-            
-            // Load schools
-            loadSchools();
-            
-            // Load recent users
-            loadUsers();
-        });
-        
-        async function loadStatistics() {
-            try {
-                // In a real implementation, these would be API calls
-                // For now, using placeholder data
-                document.getElementById('totalSchools').textContent = '12';
-                document.getElementById('totalUsers').textContent = '450';
-                document.getElementById('totalStudents').textContent = '325';
-                document.getElementById('totalTeachers').textContent = '48';
-            } catch (error) {
-                console.error('Error loading statistics:', error);
-            }
-        }
-        
-        async function loadSchools() {
-            const container = document.getElementById('schoolsTable');
-            
-            try {
-                // Placeholder data - replace with actual API call
-                const schools = [
-                    { id: 1, name: 'Springfield Elementary', admin: 'John Doe', students: 150, status: 'Active' },
-                    { id: 2, name: 'Riverdale High', admin: 'Jane Smith', students: 200, status: 'Active' },
-                    { id: 3, name: 'Greenwood Academy', admin: 'Bob Johnson', students: 120, status: 'Active' }
-                ];
-                
-                const columns = [
-                    { label: 'School Name', field: 'name' },
-                    { label: 'Admin', field: 'admin' },
-                    { label: 'Students', field: 'students' },
-                    { label: 'Status', field: 'status' }
-                ];
-                
-                container.innerHTML = Dashboard.renderTable(columns, schools);
-            } catch (error) {
-                console.error('Error loading schools:', error);
-                container.innerHTML = '<p class="error-message">Failed to load schools</p>';
-            }
-        }
-        
-        async function loadUsers() {
-            const container = document.getElementById('usersTable');
-            
-            try {
-                // Placeholder data - replace with actual API call
-                const users = [
-                    { name: 'Alice Williams', role: 'Teacher', email: 'alice@example.com', joined: '2024-01-15' },
-                    { name: 'Bob Brown', role: 'Parent', email: 'bob@example.com', joined: '2024-02-01' },
-                    { name: 'Charlie Davis', role: 'Student', email: 'charlie@example.com', joined: '2024-02-10' }
-                ];
-                
-                const columns = [
-                    { label: 'Name', field: 'name' },
-                    { label: 'Role', field: 'role' },
-                    { label: 'Email', field: 'email' },
-                    { label: 'Joined', field: 'joined', render: (row) => formatDate(row.joined) }
-                ];
-                
-                container.innerHTML = Dashboard.renderTable(columns, users);
-            } catch (error) {
-                console.error('Error loading users:', error);
-                container.innerHTML = '<p class="error-message">Failed to load users</p>';
-            }
-        }
-    </script>
+    <script src="../js/api.js"></script>
+    <script src="../js/pages/systemowner-dashboard.js"></script>
 </body>
 </html>

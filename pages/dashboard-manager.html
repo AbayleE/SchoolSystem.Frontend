@@ -5,6 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manager Dashboard</title>
     <link rel="stylesheet" href="../css/main.css">
+    <style>
+        .section-title {
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background: #f5f5f5;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+            color: #333;
+            border-bottom: 2px solid #ddd;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        tr:hover {
+            background: #f9f9f9;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+        .status-badge.active {
+            background: #4CAF50;
+        }
+        .status-badge.inactive {
+            background: #999;
+        }
+        .btn-group {
+            display: flex;
+            gap: 5px;
+        }
+        .btn-small {
+            padding: 4px 8px;
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body class="dashboard">
     <!-- Navigation -->
@@ -15,6 +81,7 @@
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#departments">Departments</a></li>
                 <li><a href="#staff">Staff</a></li>
+                <li><a href="#budget">Budget</a></li>
                 <li><a href="#reports">Reports</a></li>
             </ul>
             <div class="nav-user">
@@ -29,7 +96,7 @@
     <div class="dashboard-content">
         <div class="container">
             <h1>Manager Dashboard</h1>
-            <p>Manage departments and staff operations</p>
+            <p>Manage departments, staff, and operations</p>
             
             <!-- Statistics -->
             <div class="stats-container">
@@ -48,98 +115,51 @@
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">📋</div>
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <h3 id="budgetAllocated">$0</h3>
+                        <p>Budget Allocated</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
                     <div class="stat-info">
                         <h3 id="pendingTasks">0</h3>
                         <p>Pending Tasks</p>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">✅</div>
-                    <div class="stat-info">
-                        <h3 id="completedTasks">0</h3>
-                        <p>Completed Tasks</p>
-                    </div>
-                </div>
             </div>
             
-            <!-- Departments -->
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Departments</h2>
-                </div>
-                <div class="table-container" id="departmentsTable">
-                    <p>Loading departments...</p>
-                </div>
+            <!-- Departments Section -->
+            <h2 class="section-title">Departments</h2>
+            <div class="table-container" id="departmentsContainer">
+                <div class="loading-spinner">Loading departments...</div>
             </div>
             
-            <!-- Staff Members -->
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Staff Members</h2>
-                </div>
-                <div class="table-container" id="staffTable">
-                    <p>Loading staff...</p>
-                </div>
+            <!-- Staff Section -->
+            <h2 class="section-title">Staff Members</h2>
+            <div class="table-container" id="staffContainer">
+                <div class="loading-spinner">Loading staff...</div>
+            </div>
+            
+            <!-- Budget Section -->
+            <h2 class="section-title">Budget Overview</h2>
+            <div class="table-container" id="budgetContainer">
+                <div class="loading-spinner">Loading budget data...</div>
+            </div>
+            
+            <!-- Tasks Section -->
+            <h2 class="section-title">Pending Tasks</h2>
+            <div class="table-container" id="tasksContainer">
+                <div class="loading-spinner">Loading tasks...</div>
             </div>
         </div>
     </div>
     
+    <script src="../js/config.js"></script>
     <script src="../js/utils.js"></script>
-    <script src="../js/api.js"></script>
     <script src="../js/auth.js"></script>
-    <script src="../js/dashboard.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', async function() {
-            Dashboard.init(Auth.ROLES.MANAGER);
-            
-            loadStatistics();
-            loadDepartments();
-            loadStaff();
-        });
-        
-        async function loadStatistics() {
-            document.getElementById('totalDepartments').textContent = '5';
-            document.getElementById('totalStaff').textContent = '24';
-            document.getElementById('pendingTasks').textContent = '8';
-            document.getElementById('completedTasks').textContent = '45';
-        }
-        
-        async function loadDepartments() {
-            const container = document.getElementById('departmentsTable');
-            const departments = [
-                { name: 'Academic Affairs', head: 'Dr. Sarah Johnson', staff: '8', budget: '$125,000' },
-                { name: 'Student Services', head: 'Mr. John Davis', staff: '6', budget: '$95,000' },
-                { name: 'Administration', head: 'Ms. Emily Wilson', staff: '10', budget: '$150,000' }
-            ];
-            
-            const columns = [
-                { label: 'Department', field: 'name' },
-                { label: 'Department Head', field: 'head' },
-                { label: 'Staff', field: 'staff' },
-                { label: 'Budget', field: 'budget' }
-            ];
-            
-            container.innerHTML = Dashboard.renderTable(columns, departments);
-        }
-        
-        async function loadStaff() {
-            const container = document.getElementById('staffTable');
-            const staff = [
-                { name: 'Alice Cooper', department: 'Academic Affairs', position: 'Coordinator', status: 'Active' },
-                { name: 'Bob Martinez', department: 'Student Services', position: 'Counselor', status: 'Active' },
-                { name: 'Carol White', department: 'Administration', position: 'Assistant', status: 'Active' }
-            ];
-            
-            const columns = [
-                { label: 'Name', field: 'name' },
-                { label: 'Department', field: 'department' },
-                { label: 'Position', field: 'position' },
-                { label: 'Status', field: 'status' }
-            ];
-            
-            container.innerHTML = Dashboard.renderTable(columns, staff);
-        }
-    </script>
+    <script src="../js/api.js"></script>
+    <script src="../js/pages/manager-dashboard.js"></script>
 </body>
 </html>
