@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Children - School Management System</title>
+  <link rel="stylesheet" href="../css/design-system.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <img class="sidebar-brand-logo" data-school-logo alt="School Logo" style="display:none;" />
+        <span class="sidebar-brand-text" data-school-name>School</span>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-section">
+          <div class="sidebar-nav-label">Main</div>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="dashboard-parent.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Dashboard</span></a></li>
+            <li class="sidebar-nav-item"><a href="parent-children.html" class="sidebar-nav-link active"><span class="sidebar-nav-text">My Children</span></a></li>
+            <li class="sidebar-nav-item"><a href="parent-grades.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Grades</span></a></li>
+            <li class="sidebar-nav-item"><a href="parent-attendance.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Attendance</span></a></li>
+            <li class="sidebar-nav-item"><a href="parent-schedule.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Schedule</span></a></li>
+          </ul>
+        </div>
+        <div class="sidebar-nav-section">
+          <div class="sidebar-nav-label">Communication</div>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="parent-messages.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Messages</span><span class="sidebar-nav-badge" id="messageBadge" style="display:none;"></span></a></li>
+            <li class="sidebar-nav-item"><a href="parent-announcements.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Announcements</span></a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <button class="topbar-toggle"><svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/></svg></button>
+        <div class="topbar-breadcrumb"><span class="topbar-breadcrumb-current">My Children</span></div>
+      </div>
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h1 class="page-title">My Children</h1>
+          <p class="page-subtitle">View information about your children.</p>
+        </div>
+        <div class="card"><div class="card-body"><div class="empty-state" id="childrenContainer">Loading your children's information...</div></div></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/ui-components.js"></script>
+  <script src="../js/tenant-theme.js"></script>
+  <script src="../js/parent-children.js"></script>
+</body>
+</html>

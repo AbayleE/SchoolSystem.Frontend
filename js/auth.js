@@ -15,9 +15,9 @@ const Auth = {
         'SystemOwner': '/pages/dashboard-systemowner.html',
         'SchoolAdmin': '/pages/dashboard-schooladmin.html',
         'Manager': '/pages/dashboard-manager.html',
-        'Teacher': '/pages/dashboard-teacher.html',
+        'Teacher': '/pages/dashboard-teacher-new.html',
         'Parent': '/pages/dashboard-parent.html',
-        'Student': '/pages/dashboard-student.html'
+        'Student': '/pages/dashboard-student-new.html'
     },
     
     // Save token to localStorage
@@ -73,9 +73,17 @@ const Auth = {
     },
     
     // Login user
-    async login(email, password) {
+    async login(email, password, options = {}) {
         try {
-            const response = await ApiClient.auth.login({ email, password });
+            const payload = typeof email === 'object'
+                ? email
+                : {
+                    email,
+                    password,
+                    ...options
+                };
+
+            const response = await ApiClient.auth.login(payload);
             
             if (response.token) {
                 this.saveToken(response.token);
@@ -127,7 +135,7 @@ const Auth = {
             console.error('Logout error:', error);
         } finally {
             this.removeToken();
-            window.location.href = '/index.html';
+            window.location.href = '/pages/login-new.html';
         }
     },
     
@@ -159,7 +167,7 @@ const Auth = {
     // Protect page - redirect if not authenticated
     requireAuth() {
         if (!this.isAuthenticated()) {
-            window.location.href = '/index.html';
+            window.location.href = '/pages/login-new.html';
             return false;
         }
         return true;

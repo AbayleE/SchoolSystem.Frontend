@@ -3,170 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Owner Dashboard</title>
-    <link rel="stylesheet" href="../css/main.css">
+    <title>System Owner Dashboard - School Management System</title>
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/layout.css">
 </head>
-<body class="dashboard">
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-content">
-            <a href="#" class="nav-brand">School System</a>
-            <ul class="nav-menu">
-                <li><a href="#overview">Overview</a></li>
-                <li><a href="#schools">Schools</a></li>
-                <li><a href="#users">Users</a></li>
-                <li><a href="#settings">Settings</a></li>
-            </ul>
-            <div class="nav-user">
-                <span class="user-badge" id="userRole">System Owner</span>
-                <span id="userName">Loading...</span>
-                <button id="logoutBtn" class="btn btn-danger">Logout</button>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <img class="sidebar-brand-logo" data-school-logo alt="School Logo" style="display:none;" />
+                <span class="sidebar-brand-text" data-school-name>School</span>
             </div>
-        </div>
-    </nav>
-    
-    <!-- Dashboard Content -->
-    <div class="dashboard-content">
-        <div class="container">
-            <h1>System Owner Dashboard</h1>
-            <p>Manage all schools, users, and system-wide settings</p>
-            
-            <!-- Statistics -->
-            <div class="stats-container" id="statsContainer">
-                <div class="stat-card">
-                    <div class="stat-icon">🏫</div>
-                    <div class="stat-info">
-                        <h3 id="totalSchools">0</h3>
-                        <p>Total Schools</p>
+
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-section">
+                    <div class="sidebar-nav-label">Main</div>
+                    <ul class="sidebar-nav-list">
+                        <li class="sidebar-nav-item"><a href="dashboard-systemowner.html" class="sidebar-nav-link active"><span class="sidebar-nav-text">Dashboard</span></a></li>
+                        <li class="sidebar-nav-item"><a href="systemowner-schools.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Schools</span></a></li>
+                        <li class="sidebar-nav-item"><a href="systemowner-users.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Users</span></a></li>
+                        <li class="sidebar-nav-item"><a href="systemowner-analytics.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Analytics</span></a></li>
+                        <li class="sidebar-nav-item"><a href="systemowner-billing.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Billing</span></a></li>
+                        <li class="sidebar-nav-item"><a href="systemowner-settings.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Settings</span></a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-nav-section">
+                    <div class="sidebar-nav-label">Audits</div>
+                    <ul class="sidebar-nav-list">
+                        <li class="sidebar-nav-item"><a href="systemowner-activity.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Activity Log</span></a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-user" data-dropdown>
+                    <img src="" alt="Profile" class="avatar" data-user-avatar style="display:none;">
+                    <div class="sidebar-user-info">
+                        <div class="sidebar-user-name" id="userName">System Owner</div>
+                        <div class="sidebar-user-role">System Owner</div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">👥</div>
-                    <div class="stat-info">
-                        <h3 id="totalUsers">0</h3>
-                        <p>Total Users</p>
+                <div class="dropdown-menu" style="display: none;">
+                    <a href="#" class="dropdown-item">Profile</a>
+                    <a href="#" class="dropdown-item">Settings</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="login-new.html" class="dropdown-item">Logout</a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="topbar">
+                <button class="topbar-toggle"><svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/></svg></button>
+                <div class="topbar-breadcrumb"><span class="topbar-breadcrumb-current">Dashboard</span></div>
+                <div class="topbar-search"><svg class="topbar-search-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/></svg><input type="text" class="topbar-search-input" placeholder="Search schools, users..."></div>
+                <div class="topbar-actions">
+                    <button class="btn btn-ghost" id="logoutBtn">Logout</button>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h1 class="page-title">System Owner Dashboard</h1>
+                    <p class="page-subtitle">Manage schools, users, analytics, and billing.</p>
+                    <div class="page-actions">
+                        <button class="btn btn-primary" id="addSchoolBtn">Add School</button>
+                        <button class="btn btn-outline" id="addUserBtn">Add User</button>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">👨‍🎓</div>
-                    <div class="stat-info">
-                        <h3 id="totalStudents">0</h3>
-                        <p>Total Students</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon primary">🏫</div><div class="stat-content"><div class="stat-label">Total Schools</div><div class="stat-value" id="totalSchools">—</div></div></div>
+                    <div class="stat-card"><div class="stat-icon success">👥</div><div class="stat-content"><div class="stat-label">Total Users</div><div class="stat-value" id="totalUsers">—</div></div></div>
+                    <div class="stat-card"><div class="stat-icon warning">👨‍🎓</div><div class="stat-content"><div class="stat-label">Total Students</div><div class="stat-value" id="totalStudents">—</div></div></div>
+                    <div class="stat-card"><div class="stat-icon error">💰</div><div class="stat-content"><div class="stat-label">Total Revenue</div><div class="stat-value" id="totalRevenue">—</div></div></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">System Analytics</h3></div>
+                    <div class="card-body" id="analyticsContainer"><div class="empty-state">Loading analytics...</div></div>
+                </div>
+
+                <div class="grid grid-cols-2" style="margin-top: var(--spacing-6);">
+                    <div class="card">
+                        <div class="card-header"><h3 class="card-title">Schools</h3></div>
+                        <div class="card-body" id="schoolsContainer"><div class="empty-state">Loading schools...</div></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3 class="card-title">Users</h3></div>
+                        <div class="card-body" id="usersContainer"><div class="empty-state">Loading users...</div></div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">👨‍🏫</div>
-                    <div class="stat-info">
-                        <h3 id="totalTeachers">0</h3>
-                        <p>Total Teachers</p>
+
+                <div class="grid grid-cols-2" style="margin-top: var(--spacing-6);">
+                    <div class="card">
+                        <div class="card-header"><h3 class="card-title">Billing & Subscriptions</h3></div>
+                        <div class="card-body" id="billingContainer"><div class="empty-state">Loading billing data...</div></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3 class="card-title">Recent Activity</h3></div>
+                        <div class="card-body" id="activityContainer"><div class="empty-state">Loading activity log...</div></div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Schools List -->
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Schools Management</h2>
-                </div>
-                <div class="table-container" id="schoolsTable">
-                    <p>Loading schools...</p>
-                </div>
-            </div>
-            
-            <!-- Recent Users -->
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Recent Users</h2>
-                </div>
-                <div class="table-container" id="usersTable">
-                    <p>Loading users...</p>
-                </div>
-            </div>
-        </div>
+        </main>
     </div>
-    
+
+    <script src="../js/config.js"></script>
     <script src="../js/utils.js"></script>
     <script src="../js/api.js"></script>
     <script src="../js/auth.js"></script>
-    <script src="../js/dashboard.js"></script>
-    <script>
-        // System Owner Dashboard Script
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Initialize dashboard
-            Dashboard.init(Auth.ROLES.SYSTEM_OWNER);
-            
-            // Load statistics
-            loadStatistics();
-            
-            // Load schools
-            loadSchools();
-            
-            // Load recent users
-            loadUsers();
-        });
-        
-        async function loadStatistics() {
-            try {
-                // In a real implementation, these would be API calls
-                // For now, using placeholder data
-                document.getElementById('totalSchools').textContent = '12';
-                document.getElementById('totalUsers').textContent = '450';
-                document.getElementById('totalStudents').textContent = '325';
-                document.getElementById('totalTeachers').textContent = '48';
-            } catch (error) {
-                console.error('Error loading statistics:', error);
-            }
-        }
-        
-        async function loadSchools() {
-            const container = document.getElementById('schoolsTable');
-            
-            try {
-                // Placeholder data - replace with actual API call
-                const schools = [
-                    { id: 1, name: 'Springfield Elementary', admin: 'John Doe', students: 150, status: 'Active' },
-                    { id: 2, name: 'Riverdale High', admin: 'Jane Smith', students: 200, status: 'Active' },
-                    { id: 3, name: 'Greenwood Academy', admin: 'Bob Johnson', students: 120, status: 'Active' }
-                ];
-                
-                const columns = [
-                    { label: 'School Name', field: 'name' },
-                    { label: 'Admin', field: 'admin' },
-                    { label: 'Students', field: 'students' },
-                    { label: 'Status', field: 'status' }
-                ];
-                
-                container.innerHTML = Dashboard.renderTable(columns, schools);
-            } catch (error) {
-                console.error('Error loading schools:', error);
-                container.innerHTML = '<p class="error-message">Failed to load schools</p>';
-            }
-        }
-        
-        async function loadUsers() {
-            const container = document.getElementById('usersTable');
-            
-            try {
-                // Placeholder data - replace with actual API call
-                const users = [
-                    { name: 'Alice Williams', role: 'Teacher', email: 'alice@example.com', joined: '2024-01-15' },
-                    { name: 'Bob Brown', role: 'Parent', email: 'bob@example.com', joined: '2024-02-01' },
-                    { name: 'Charlie Davis', role: 'Student', email: 'charlie@example.com', joined: '2024-02-10' }
-                ];
-                
-                const columns = [
-                    { label: 'Name', field: 'name' },
-                    { label: 'Role', field: 'role' },
-                    { label: 'Email', field: 'email' },
-                    { label: 'Joined', field: 'joined', render: (row) => formatDate(row.joined) }
-                ];
-                
-                container.innerHTML = Dashboard.renderTable(columns, users);
-            } catch (error) {
-                console.error('Error loading users:', error);
-                container.innerHTML = '<p class="error-message">Failed to load users</p>';
-            }
-        }
-    </script>
+    <script src="../js/ui-components.js"></script>
+    <script src="../js/tenant-theme.js"></script>
+    <script src="../js/pages/systemowner-dashboard.js"></script>
 </body>
 </html>

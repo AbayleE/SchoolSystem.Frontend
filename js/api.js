@@ -1,6 +1,7 @@
 // API Client for backend communication
 // Note: Update API_BASE_URL to match your backend URL
-const API_BASE_URL = config.API_BASE_URL; // Change this to your backend URL
+// ...existing code...
+const API_BASE_URL = APP_CONFIG.API_BASE_URL;;  // Change this to your backend URL
 
 window.ApiClient  = {
     // Make HTTP request

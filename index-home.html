@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Management System - Home</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <style>
+        /* Landing Page Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-bg-secondary);
+        }
+
+        .navbar {
+            background-color: var(--color-bg-primary);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-4) var(--spacing-6);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+            text-decoration: none;
+            color: var(--color-text-primary);
+        }
+
+        .navbar-brand-text {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary);
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: var(--spacing-6);
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-link {
+            text-decoration: none;
+            color: var(--color-text-secondary);
+            font-weight: var(--font-weight-medium);
+            font-size: var(--font-size-sm);
+            transition: color var(--transition-fast);
+        }
+
+        .navbar-link:hover {
+            color: var(--color-primary);
+        }
+
+        .navbar-actions {
+            display: flex;
+            gap: var(--spacing-3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: var(--color-text-inverse);
+            padding: var(--spacing-16) var(--spacing-6);
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: var(--font-family-heading);
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            margin: 0 0 var(--spacing-4) 0;
+            line-height: var(--line-height-tight);
+        }
+
+        .hero-subtitle {
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-regular);
+            margin: 0 0 var(--spacing-8) 0;
+            opacity: 0.95;
+            line-height: var(--line-height-relaxed);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: var(--spacing-4);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-hero {
+            padding: var(--spacing-4) var(--spacing-8);
+            font-size: var(--font-size-base);
+        }
+
+        /* Features Section */
+        .features {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-16) var(--spacing-6);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: var(--spacing-12);
+        }
+
+        .section-title h2 {
+            font-family: var(--font-family-heading);
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text-primary);
+            margin: 0 0 var(--spacing-3) 0;
+        }
+
+        .section-subtitle {
+            color: var(--color-text-secondary);
+            font-size: var(--font-size-lg);
+            margin: 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-6);
+        }
+
+        .feature-card {
+            background: var(--color-bg-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-6);
+            box-shadow: var(--shadow-md);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-4);
+        }
+
+        .feature-card h3 {
+            font-family: var(--font-family-heading);
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+            margin: 0 0 var(--spacing-3) 0;
+        }
+
+        .feature-card p {
+            color: var(--color-text-secondary);
+            font-size: var(--font-size-sm);
+            line-height: var(--line-height-relaxed);
+            margin: 0;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%);
+            color: var(--color-text-inverse);
+            padding: var(--spacing-12) var(--spacing-6);
+            text-align: center;
+            margin-top: var(--spacing-12);
+        }
+
+        .cta-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-family: var(--font-family-heading);
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            margin: 0 0 var(--spacing-4) 0;
+        }
+
+        .cta-section p {
+            font-size: var(--font-size-lg);
+            margin: 0 0 var(--spacing-6) 0;
+            opacity: 0.95;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--color-text-primary);
+            color: var(--color-text-inverse);
+            padding: var(--spacing-12) var(--spacing-6);
+            margin-top: var(--spacing-16);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-8);
+            margin-bottom: var(--spacing-8);
+        }
+
+        .footer-section h4 {
+            font-family: var(--font-family-heading);
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            margin: 0 0 var(--spacing-4) 0;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer-section li {
+            margin-bottom: var(--spacing-3);
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            transition: color var(--transition-fast);
+        }
+
+        .footer-section a:hover {
+            color: var(--color-text-inverse);
+        }
+
+        .footer-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin: var(--spacing-6) 0;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            font-size: var(--font-size-sm);
+            color: rgba(255, 255, 255, 0.7);
+            padding-top: var(--spacing-6);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-direction: column;
+                gap: var(--spacing-4);
+            }
+
+            .navbar-menu {
+                flex-direction: column;
+                gap: var(--spacing-4);
+                width: 100%;
+            }
+
+            .hero h1 {
+                font-size: var(--font-size-2xl);
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-buttons .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @supports (--css: variables) {
+            :root {
+                --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index-home.html" class="navbar-brand">
+                <span class="navbar-brand-text">🎓 School System</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="index-home.html" class="navbar-link">Home</a></li>
+                <li><a href="about-us.html" class="navbar-link">About</a></li>
+                <li><a href="apply.html" class="navbar-link">Apply</a></li>
+                <li><a href="contact.html" class="navbar-link">Contact</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <a href="pages/login-new.html" class="btn btn-outline">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1>Welcome to Our School</h1>
+            <p class="hero-subtitle">Empowering students with quality education and innovative learning experiences</p>
+            <div class="hero-buttons">
+                <a href="apply.html" class="btn btn-primary btn-hero">Apply Now</a>
+                <a href="about-us.html" class="btn btn-outline btn-hero" style="background-color: transparent; color: white; border-color: white;">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="section-title">
+            <h2>Why Choose Us</h2>
+            <p class="section-subtitle">Comprehensive education platform designed for student success</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>Comprehensive Curriculum</h3>
+                <p>Rigorous academics combined with creative thinking and practical skills development</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👨‍🏫</div>
+                <h3>Expert Faculty</h3>
+                <p>Experienced educators dedicated to nurturing individual talents and potential</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏫</div>
+                <h3>Modern Facilities</h3>
+                <p>State-of-the-art classrooms, laboratories, and recreational areas</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤝</div>
+                <h3>Holistic Development</h3>
+                <p>Focus on academic excellence, character building, and social responsibility</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💻</div>
+                <h3>Digital Learning</h3>
+                <p>Integrated technology platform for seamless learning and collaboration</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Student Support</h3>
+                <p>Personalized guidance and mentoring for academic and personal growth</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2>Ready to Join Our Community?</h2>
+            <p>Take the first step towards an exceptional educational journey</p>
+            <a href="apply.html" class="btn btn-primary btn-hero">Start Your Application</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>About School</h4>
+                    <ul>
+                        <li><a href="about-us.html">Our Mission</a></li>
+                        <li><a href="about-us.html">Our Story</a></li>
+                        <li><a href="about-us.html">Leadership</a></li>
+                        <li><a href="about-us.html">Facilities</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="apply.html">Apply Now</a></li>
+                        <li><a href="#">Admissions FAQ</a></li>
+                        <li><a href="#">Programs</a></li>
+                        <li><a href="#">Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Disclaimer</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 School System. All rights reserved. | Empowering Education Globally</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/tenant-theme.js"></script>
+</body>
+</html>
+

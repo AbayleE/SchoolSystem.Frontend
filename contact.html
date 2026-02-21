@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - School Management System</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <style>
+        body { margin: 0; padding: 0; background-color: var(--color-bg-secondary); }
+        .navbar { background-color: var(--color-bg-primary); box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: 100; }
+        .navbar-container { max-width: 1400px; margin: 0 auto; padding: var(--spacing-4) var(--spacing-6); display: flex; justify-content: space-between; align-items: center; }
+        .navbar-brand { display: flex; align-items: center; gap: var(--spacing-3); text-decoration: none; color: var(--color-text-primary); }
+        .navbar-brand-text { font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); color: var(--color-primary); }
+        .navbar-menu { display: flex; gap: var(--spacing-6); align-items: center; list-style: none; margin: 0; padding: 0; }
+        .navbar-link { text-decoration: none; color: var(--color-text-secondary); font-weight: var(--font-weight-medium); font-size: var(--font-size-sm); transition: color var(--transition-fast); }
+        .navbar-link:hover { color: var(--color-primary); }
+        .navbar-actions { display: flex; gap: var(--spacing-3); }
+        .hero { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); color: var(--color-text-inverse); padding: var(--spacing-12) var(--spacing-6); text-align: center; }
+        .hero-container { max-width: 800px; margin: 0 auto; }
+        .hero h1 { font-family: var(--font-family-heading); font-size: var(--font-size-4xl); font-weight: var(--font-weight-bold); margin: 0; line-height: var(--line-height-tight); }
+        .contact-content { max-width: 1400px; margin: 0 auto; padding: var(--spacing-12) var(--spacing-6); }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-8); margin-bottom: var(--spacing-12); }
+        .contact-column { display: flex; flex-direction: column; gap: var(--spacing-6); }
+        .contact-info-box { background: var(--color-bg-primary); border-radius: var(--radius-lg); padding: var(--spacing-8); box-shadow: var(--shadow-md); }
+        .contact-info-box h3 { font-family: var(--font-family-heading); font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin: 0 0 var(--spacing-6) 0; }
+        .contact-item { margin-bottom: var(--spacing-6); }
+        .contact-item:last-child { margin-bottom: 0; }
+        .contact-label { font-weight: var(--font-weight-medium); color: var(--color-primary); font-size: var(--font-size-sm); margin-bottom: var(--spacing-2); }
+        .contact-value { color: var(--color-text-secondary); font-size: var(--font-size-base); margin: 0; }
+        .departments-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--spacing-4); }
+        .department-card { background: var(--color-bg-primary); border-radius: var(--radius-lg); padding: var(--spacing-6); box-shadow: var(--shadow-md); transition: transform var(--transition-fast), box-shadow var(--transition-fast); }
+        .department-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .dept-icon { font-size: 2rem; margin-bottom: var(--spacing-3); }
+        .department-card h4 { font-family: var(--font-family-heading); font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin: 0 0 var(--spacing-3) 0; }
+        .dept-info { font-size: var(--font-size-sm); color: var(--color-text-secondary); margin: 0 0 var(--spacing-2); }
+        .dept-info strong { color: var(--color-text-primary); }
+        .form-section { background: var(--color-bg-primary); border-radius: var(--radius-lg); padding: var(--spacing-8); box-shadow: var(--shadow-md); }
+        .form-section h2 { font-family: var(--font-family-heading); font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin: 0 0 var(--spacing-6) 0; }
+        .form-group { display: flex; flex-direction: column; margin-bottom: var(--spacing-6); }
+        .form-group label { font-weight: var(--font-weight-medium); color: var(--color-text-primary); font-size: var(--font-size-sm); margin-bottom: var(--spacing-2); }
+        .form-group input,.form-group select,.form-group textarea { padding: var(--spacing-3) var(--spacing-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); font-family: var(--font-family-body); font-size: var(--font-size-base); color: var(--color-text-primary); background-color: var(--color-bg-secondary); transition: border-color var(--transition-fast), box-shadow var(--transition-fast); }
+        .form-group input:focus,.form-group select:focus,.form-group textarea:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1); }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .form-group input.error,.form-group select.error,.form-group textarea.error { border-color: var(--color-error); }
+        .form-error { color: var(--color-error); font-size: var(--font-size-xs); margin-top: var(--spacing-2); display: none; }
+        .form-group.has-error .form-error { display: block; }
+        .form-actions { display: flex; gap: var(--spacing-4); margin-top: var(--spacing-8); }
+        .btn-submit { padding: var(--spacing-3) var(--spacing-6); background-color: var(--color-primary); color: var(--color-text-inverse); border: none; border-radius: var(--radius-md); font-weight: var(--font-weight-medium); cursor: pointer; font-size: var(--font-size-base); transition: transform var(--transition-fast), box-shadow var(--transition-fast); }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .btn-reset { padding: var(--spacing-3) var(--spacing-6); background-color: var(--color-bg-secondary); color: var(--color-text-primary); border: 1px solid var(--color-border); border-radius: var(--radius-md); font-weight: var(--font-weight-medium); cursor: pointer; font-size: var(--font-size-base); transition: background-color var(--transition-fast); }
+        .btn-reset:hover { background-color: var(--color-border); }
+        .alert { padding: var(--spacing-4) var(--spacing-6); border-radius: var(--radius-md); margin-bottom: var(--spacing-6); display: none; }
+        .alert-success { background-color: rgba(76, 175, 80, 0.1); border-left: 4px solid var(--color-success); color: var(--color-success); }
+        .alert-error { background-color: rgba(244, 67, 54, 0.1); border-left: 4px solid var(--color-error); color: var(--color-error); }
+        .cta-section { background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%); color: var(--color-text-inverse); padding: var(--spacing-12) var(--spacing-6); text-align: center; margin-top: var(--spacing-12); }
+        .cta-container { max-width: 600px; margin: 0 auto; }
+        .cta-section h2 { font-family: var(--font-family-heading); font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); margin: 0 0 var(--spacing-4) 0; }
+        .cta-section p { font-size: var(--font-size-lg); margin: 0 0 var(--spacing-6) 0; opacity: 0.95; }
+        .footer { background-color: var(--color-text-primary); color: var(--color-text-inverse); padding: var(--spacing-12) var(--spacing-6); margin-top: var(--spacing-16); }
+        .footer-container { max-width: 1400px; margin: 0 auto; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-8); margin-bottom: var(--spacing-8); }
+        .footer-section h4 { font-family: var(--font-family-heading); font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); margin: 0 0 var(--spacing-4) 0; }
+        .footer-section ul { list-style: none; margin: 0; padding: 0; }
+        .footer-section li { margin-bottom: var(--spacing-3); }
+        .footer-section a { color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: var(--font-size-sm); transition: color var(--transition-fast); }
+        .footer-section a:hover { color: var(--color-text-inverse); }
+        .footer-divider { border-top: 1px solid rgba(255, 255, 255, 0.2); margin: var(--spacing-6) 0; }
+        .footer-bottom { text-align: center; font-size: var(--font-size-sm); color: rgba(255, 255, 255, 0.7); padding-top: var(--spacing-6); }
+        @media (max-width: 768px) {
+            .navbar-container { flex-direction: column; gap: var(--spacing-4); }
+            .navbar-menu { flex-direction: column; gap: var(--spacing-4); width: 100%; }
+            .hero h1 { font-size: var(--font-size-2xl); }
+            .contact-grid { grid-template-columns: 1fr; }
+            .departments-grid { grid-template-columns: 1fr; }
+            .form-actions { flex-direction: column; }
+        }
+        @supports (--css: variables) {
+            :root { --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index-home.html" class="navbar-brand">
+                <span class="navbar-brand-text">🎓 School System</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="index-home.html" class="navbar-link">Home</a></li>
+                <li><a href="about-us.html" class="navbar-link">About</a></li>
+                <li><a href="apply.html" class="navbar-link">Apply</a></li>
+                <li><a href="contact.html" class="navbar-link">Contact</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <a href="pages/login-new.html" class="btn btn-outline">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-container">
+            <h1>Get In Touch</h1>
+        </div>
+    </section>
+
+    <div class="contact-content">
+        <div class="contact-grid">
+            <!-- Contact Information Column -->
+            <div class="contact-column">
+                <div class="contact-info-box">
+                    <h3>📍 Contact Information</h3>
+                    <div class="contact-item">
+                        <div class="contact-label">Address</div>
+                        <p class="contact-value">School Plaza, Education Avenue, Tech City 12345</p>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">Phone</div>
+                        <p class="contact-value">+1 (555) 123-4567</p>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">Email</div>
+                        <p class="contact-value">info@schoolsystem.edu</p>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">Office Hours</div>
+                        <p class="contact-value">Monday - Friday: 8:00 AM - 5:00 PM<br>Saturday: 9:00 AM - 1:00 PM<br>Sunday: Closed</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="font-family: var(--font-family-heading); font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin: 0 0 var(--spacing-4) 0;">🏢 Departments</h3>
+                    <div class="departments-grid">
+                        <div class="department-card">
+                            <div class="dept-icon">📝</div>
+                            <h4>Admissions</h4>
+                            <p class="dept-info"><strong>Email:</strong> admissions@schoolsystem.edu</p>
+                            <p class="dept-info"><strong>Ext:</strong> 101</p>
+                        </div>
+                        <div class="department-card">
+                            <div class="dept-icon">📚</div>
+                            <h4>Academic</h4>
+                            <p class="dept-info"><strong>Email:</strong> academics@schoolsystem.edu</p>
+                            <p class="dept-info"><strong>Ext:</strong> 102</p>
+                        </div>
+                        <div class="department-card">
+                            <div class="dept-icon">👥</div>
+                            <h4>Student Affairs</h4>
+                            <p class="dept-info"><strong>Email:</strong> studentaffairs@schoolsystem.edu</p>
+                            <p class="dept-info"><strong>Ext:</strong> 103</p>
+                        </div>
+                        <div class="department-card">
+                            <div class="dept-icon">💰</div>
+                            <h4>Finance</h4>
+                            <p class="dept-info"><strong>Email:</strong> finance@schoolsystem.edu</p>
+                            <p class="dept-info"><strong>Ext:</strong> 104</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form Column -->
+            <div class="contact-column">
+                <div class="form-section">
+                    <h2>Send us a Message</h2>
+                    
+                    <div class="alert alert-success" id="successAlert">
+                        <strong>Success!</strong> Your message has been sent successfully. We'll get back to you soon.
+                    </div>
+                    <div class="alert alert-error" id="errorAlert">
+                        <strong>Error!</strong> <span id="errorMessage">Please check the form for errors.</span>
+                    </div>
+
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" required>
+                            <span class="form-error">Name is required</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                            <span class="form-error">Please enter a valid email</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone">
+                            <span class="form-error">Phone must be at least 10 digits</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Select a subject</option>
+                                <option value="Admissions Inquiry">Admissions Inquiry</option>
+                                <option value="Academic Question">Academic Question</option>
+                                <option value="Facilities Tour">Facilities Tour</option>
+                                <option value="Events & Activities">Events & Activities</option>
+                                <option value="Financial Aid">Financial Aid</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <span class="form-error">Please select a subject</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" required></textarea>
+                            <span class="form-error">Message is required</span>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-submit">Send Message</button>
+                            <button type="reset" class="btn-reset">Clear</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2>Have Questions About Admissions?</h2>
+            <p>Our admissions team is here to help. Reach out anytime during office hours.</p>
+            <a href="apply.html" class="btn btn-primary">Apply Now</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>About School</h4>
+                    <ul>
+                        <li><a href="about-us.html">Our Mission</a></li>
+                        <li><a href="about-us.html">Our Story</a></li>
+                        <li><a href="about-us.html">Leadership</a></li>
+                        <li><a href="about-us.html">Facilities</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="apply.html">Apply Now</a></li>
+                        <li><a href="#">Admissions FAQ</a></li>
+                        <li><a href="#">Programs</a></li>
+                        <li><a href="#">Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Disclaimer</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 School System. All rights reserved. | Empowering Education Globally</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/tenant-theme.js"></script>
+    <script>
+        const form = document.getElementById('contactForm');
+        const successAlert = document.getElementById('successAlert');
+        const errorAlert = document.getElementById('errorAlert');
+        const errorMessage = document.getElementById('errorMessage');
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validatePhone(phone) {
+            if (!phone) return true; // Phone is optional
+            const digits = phone.replace(/\D/g, '');
+            return digits.length >= 10;
+        }
+
+        function validateForm() {
+            let isValid = true;
+            const formGroups = form.querySelectorAll('.form-group');
+
+            formGroups.forEach(group => {
+                const input = group.querySelector('input, select, textarea');
+                if (!input) return;
+
+                const value = input.value.trim();
+                const fieldName = input.name;
+                let fieldValid = true;
+
+                // Required field validation
+                if (input.required && !value) {
+                    fieldValid = false;
+                } else if (fieldName === 'email' && value && !validateEmail(value)) {
+                    fieldValid = false;
+                } else if (fieldName === 'phone' && value && !validatePhone(value)) {
+                    fieldValid = false;
+                }
+
+                if (!fieldValid) {
+                    group.classList.add('has-error');
+                    input.classList.add('error');
+                    isValid = false;
+                } else {
+                    group.classList.remove('has-error');
+                    input.classList.remove('error');
+                }
+            });
+
+            return isValid;
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            successAlert.style.display = 'none';
+            errorAlert.style.display = 'none';
+
+            if (!validateForm()) {
+                errorMessage.textContent = 'Please fix the errors in the form';
+                errorAlert.style.display = 'block';
+                return;
+            }
+
+            try {
+                const formData = new FormData(form);
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    successAlert.style.display = 'block';
+                    form.reset();
+                } else {
+                    throw new Error('Server error');
+                }
+            } catch (error) {
+                errorMessage.textContent = 'Failed to send message. Please try again.';
+                errorAlert.style.display = 'block';
+            }
+        });
+
+        // Clear error state on input
+        form.querySelectorAll('input, select, textarea').forEach(input => {
+            input.addEventListener('change', () => {
+                const group = input.closest('.form-group');
+                group.classList.remove('has-error');
+                input.classList.remove('error');
+            });
+        });
+    </script>
+</body>
+</html>
+

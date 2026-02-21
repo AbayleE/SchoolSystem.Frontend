@@ -3,143 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manager Dashboard</title>
-    <link rel="stylesheet" href="../css/main.css">
+    <title>Manager Dashboard - School Management System</title>
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/layout.css">
 </head>
-<body class="dashboard">
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-content">
-            <a href="#" class="nav-brand">School System</a>
-            <ul class="nav-menu">
-                <li><a href="#overview">Overview</a></li>
-                <li><a href="#departments">Departments</a></li>
-                <li><a href="#staff">Staff</a></li>
-                <li><a href="#reports">Reports</a></li>
-            </ul>
-            <div class="nav-user">
-                <span class="user-badge" id="userRole">Manager</span>
-                <span id="userName">Loading...</span>
-                <button id="logoutBtn" class="btn btn-danger">Logout</button>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <img class="sidebar-brand-logo" data-school-logo alt="School Logo" style="display:none;" />
+                <span class="sidebar-brand-text" data-school-name>School</span>
             </div>
-        </div>
-    </nav>
-    
-    <!-- Dashboard Content -->
-    <div class="dashboard-content">
-        <div class="container">
-            <h1>Manager Dashboard</h1>
-            <p>Manage departments and staff operations</p>
-            
-            <!-- Statistics -->
-            <div class="stats-container">
-                <div class="stat-card">
-                    <div class="stat-icon">🏢</div>
-                    <div class="stat-info">
-                        <h3 id="totalDepartments">0</h3>
-                        <p>Departments</p>
+
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-section">
+                    <div class="sidebar-nav-label">Main</div>
+                    <ul class="sidebar-nav-list">
+                        <li class="sidebar-nav-item"><a href="dashboard-manager.html" class="sidebar-nav-link active"><span class="sidebar-nav-text">Dashboard</span></a></li>
+                        <li class="sidebar-nav-item"><a href="manager-departments.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Departments</span></a></li>
+                        <li class="sidebar-nav-item"><a href="manager-staff.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Staff</span></a></li>
+                        <li class="sidebar-nav-item"><a href="manager-budget.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Budget</span></a></li>
+                        <li class="sidebar-nav-item"><a href="manager-reports.html" class="sidebar-nav-link"><span class="sidebar-nav-text">Reports</span></a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-user" data-dropdown>
+                    <img src="" alt="Profile" class="avatar" data-user-avatar style="display:none;">
+                    <div class="sidebar-user-info">
+                        <div class="sidebar-user-name" id="userName">Manager</div>
+                        <div class="sidebar-user-role">Manager</div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">👥</div>
-                    <div class="stat-info">
-                        <h3 id="totalStaff">0</h3>
-                        <p>Staff Members</p>
+                <div class="dropdown-menu" style="display: none;">
+                    <a href="#" class="dropdown-item">Profile</a>
+                    <a href="#" class="dropdown-item">Settings</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="login-new.html" class="dropdown-item">Logout</a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="topbar">
+                <button class="topbar-toggle"><svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/></svg></button>
+                <div class="topbar-breadcrumb"><span class="topbar-breadcrumb-current">Dashboard</span></div>
+                <div class="topbar-search"><svg class="topbar-search-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/></svg><input type="text" class="topbar-search-input" placeholder="Search departments, staff..."></div>
+                <div class="topbar-actions">
+                    <button class="btn btn-ghost" id="logoutBtn">Logout</button>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h1 class="page-title">Manager Dashboard</h1>
+                    <p class="page-subtitle">Manage departments, staff, and operations.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon primary">🏢</div>
+                        <div class="stat-content"><div class="stat-label">Departments</div><div class="stat-value" id="totalDepartments">—</div></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon success">👥</div>
+                        <div class="stat-content"><div class="stat-label">Staff Members</div><div class="stat-value" id="totalStaff">—</div></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon warning">💰</div>
+                        <div class="stat-content"><div class="stat-label">Budget Allocated</div><div class="stat-value" id="budgetAllocated">—</div></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon error">📊</div>
+                        <div class="stat-content"><div class="stat-label">Pending Tasks</div><div class="stat-value" id="pendingTasks">—</div></div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">📋</div>
-                    <div class="stat-info">
-                        <h3 id="pendingTasks">0</h3>
-                        <p>Pending Tasks</p>
+
+                <div class="grid grid-cols-2">
+                    <div class="card">
+                        <div class="card-header"><h3 class="card-title">Departments</h3></div>
+                        <div class="card-body" id="departmentsContainer"><div class="empty-state">Loading departments...</div></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3 class="card-title">Staff Members</h3></div>
+                        <div class="card-body" id="staffContainer"><div class="empty-state">Loading staff...</div></div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">✅</div>
-                    <div class="stat-info">
-                        <h3 id="completedTasks">0</h3>
-                        <p>Completed Tasks</p>
+
+                <div class="grid grid-cols-2" style="margin-top: var(--spacing-6);">
+                    <div class="card">
+                        <div class="card-header"><h3 class="card-title">Budget Overview</h3></div>
+                        <div class="card-body" id="budgetContainer"><div class="empty-state">Loading budget data...</div></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3 class="card-title">Pending Tasks</h3></div>
+                        <div class="card-body" id="tasksContainer"><div class="empty-state">Loading tasks...</div></div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Departments -->
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Departments</h2>
-                </div>
-                <div class="table-container" id="departmentsTable">
-                    <p>Loading departments...</p>
-                </div>
-            </div>
-            
-            <!-- Staff Members -->
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Staff Members</h2>
-                </div>
-                <div class="table-container" id="staffTable">
-                    <p>Loading staff...</p>
-                </div>
-            </div>
-        </div>
+        </main>
     </div>
-    
+
+    <script src="../js/config.js"></script>
     <script src="../js/utils.js"></script>
     <script src="../js/api.js"></script>
     <script src="../js/auth.js"></script>
-    <script src="../js/dashboard.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', async function() {
-            Dashboard.init(Auth.ROLES.MANAGER);
-            
-            loadStatistics();
-            loadDepartments();
-            loadStaff();
-        });
-        
-        async function loadStatistics() {
-            document.getElementById('totalDepartments').textContent = '5';
-            document.getElementById('totalStaff').textContent = '24';
-            document.getElementById('pendingTasks').textContent = '8';
-            document.getElementById('completedTasks').textContent = '45';
-        }
-        
-        async function loadDepartments() {
-            const container = document.getElementById('departmentsTable');
-            const departments = [
-                { name: 'Academic Affairs', head: 'Dr. Sarah Johnson', staff: '8', budget: '$125,000' },
-                { name: 'Student Services', head: 'Mr. John Davis', staff: '6', budget: '$95,000' },
-                { name: 'Administration', head: 'Ms. Emily Wilson', staff: '10', budget: '$150,000' }
-            ];
-            
-            const columns = [
-                { label: 'Department', field: 'name' },
-                { label: 'Department Head', field: 'head' },
-                { label: 'Staff', field: 'staff' },
-                { label: 'Budget', field: 'budget' }
-            ];
-            
-            container.innerHTML = Dashboard.renderTable(columns, departments);
-        }
-        
-        async function loadStaff() {
-            const container = document.getElementById('staffTable');
-            const staff = [
-                { name: 'Alice Cooper', department: 'Academic Affairs', position: 'Coordinator', status: 'Active' },
-                { name: 'Bob Martinez', department: 'Student Services', position: 'Counselor', status: 'Active' },
-                { name: 'Carol White', department: 'Administration', position: 'Assistant', status: 'Active' }
-            ];
-            
-            const columns = [
-                { label: 'Name', field: 'name' },
-                { label: 'Department', field: 'department' },
-                { label: 'Position', field: 'position' },
-                { label: 'Status', field: 'status' }
-            ];
-            
-            container.innerHTML = Dashboard.renderTable(columns, staff);
-        }
-    </script>
+    <script src="../js/ui-components.js"></script>
+    <script src="../js/tenant-theme.js"></script>
+    <script src="../js/pages/manager-dashboard.js"></script>
 </body>
 </html>

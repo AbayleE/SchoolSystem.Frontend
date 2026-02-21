@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - School Management System</title>
+  <link rel="stylesheet" href="../css/design-system.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    /* Authentication Layout */
+    .auth-layout {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background-color: var(--color-bg-secondary);
+    }
+
+    .auth-brand-section {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      padding: var(--spacing-12);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: var(--color-text-inverse);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-brand-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    }
+
+    .auth-brand-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 500px;
+    }
+
+    .auth-logo {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto var(--spacing-8);
+      background-color: white;
+      border-radius: var(--radius-xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-xl);
+    }
+
+    .auth-logo img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+    }
+
+    .auth-brand-title {
+      font-size: var(--font-size-4xl);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--spacing-4);
+      color: white;
+    }
+
+    .auth-brand-description {
+      font-size: var(--font-size-lg);
+      opacity: 0.9;
+      line-height: var(--line-height-relaxed);
+    }
+
+    .auth-features {
+      margin-top: var(--spacing-10);
+      display: grid;
+      gap: var(--spacing-4);
+      text-align: left;
+    }
+
+    .auth-feature {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+    }
+
+    .auth-feature-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .auth-form-section {
+      padding: var(--spacing-12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--color-bg-primary);
+    }
+
+    .auth-form-container {
+      width: 100%;
+      max-width: 450px;
+    }
+
+    .auth-form-header {
+      margin-bottom: var(--spacing-8);
+    }
+
+    .auth-form-title {
+      font-size: var(--font-size-3xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .auth-form-subtitle {
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+    }
+
+    .auth-form {
+      margin-bottom: var(--spacing-6);
+    }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-4);
+      margin: var(--spacing-6) 0;
+      color: var(--color-text-tertiary);
+      font-size: var(--font-size-sm);
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: var(--color-border);
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: var(--spacing-8);
+      padding-top: var(--spacing-8);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .auth-footer-text {
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-sm);
+    }
+
+    .role-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-3);
+      margin-bottom: var(--spacing-6);
+    }
+
+    .role-card {
+      padding: var(--spacing-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-align: center;
+      background-color: var(--color-bg-primary);
+    }
+
+    .role-card:hover {
+      border-color: var(--color-primary-light);
+      box-shadow: var(--shadow-md);
+    }
+
+    .role-card.selected {
+      border-color: var(--color-primary);
+      background-color: var(--color-primary-lighter);
+    }
+
+    .role-icon {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto var(--spacing-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      background-color: var(--color-bg-secondary);
+    }
+
+    .role-card.selected .role-icon {
+      background-color: var(--color-primary);
+      color: white;
+    }
+
+    .role-name {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-primary);
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: var(--spacing-4);
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      padding: var(--spacing-2);
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-5);
+      font-size: var(--font-size-sm);
+    }
+
+    @media (max-width: 768px) {
+      .auth-layout {
+        grid-template-columns: 1fr;
+      }
+      
+      .auth-brand-section {
+        display: none;
+      }
+
+      .auth-form-section {
+        padding: var(--spacing-6);
+      }
+
+      .role-selector {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-layout">
+    <!-- Brand Section -->
+    <div class="auth-brand-section">
+      <div class="auth-brand-content">
+        <div class="auth-logo">
+          <img data-school-logo alt="School Logo" style="display:none; width: 80px; height: 80px; object-fit: contain;" />
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <path d="M40 10L10 25V35C10 52.5 22.5 68.5 40 70C57.5 68.5 70 52.5 70 35V25L40 10Z" fill="#1A73E8"/>
+            <path d="M40 20L20 30V37C20 48.5 28 58.5 40 60C52 58.5 60 48.5 60 37V30L40 20Z" fill="white"/>
+          </svg>
+        </div>
+        <h1 class="auth-brand-title" data-school-name>School Management System</h1>
+        <p class="auth-brand-description">
+          Empowering Ethiopian Private High Schools with Modern, Efficient, and Comprehensive Management Tools
+        </p>
+        
+        <div class="auth-features">
+          <div class="auth-feature">
+            <svg class="auth-feature-icon" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span>Comprehensive Student & Teacher Management</span>
+          </div>
+          <div class="auth-feature">
+            <svg class="auth-feature-icon" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span>Real-time Attendance & Grade Tracking</span>
+          </div>
+          <div class="auth-feature">
+            <svg class="auth-feature-icon" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span>Multi-Tenant Architecture for Multiple Schools</span>
+          </div>
+          <div class="auth-feature">
+            <svg class="auth-feature-icon" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span>Secure & Reliable Cloud-Based Platform</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="auth-form-section">
+      <div class="auth-form-container">
+        <div class="auth-form-header">
+          <h2 class="auth-form-title">Welcome Back</h2>
+          <p class="auth-form-subtitle">Sign in to access your account</p>
+        </div>
+
+        <div class="alert alert-error" id="loginError" style="display: none;"></div>
+
+        <!-- Role Selector -->
+        <div class="role-selector">
+          <div class="role-card" data-role="student">
+            <div class="role-icon">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
+              </svg>
+            </div>
+            <div class="role-name">Student</div>
+          </div>
+
+          <div class="role-card" data-role="parent">
+            <div class="role-icon">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+              </svg>
+            </div>
+            <div class="role-name">Parent</div>
+          </div>
+
+          <div class="role-card selected" data-role="teacher">
+            <div class="role-icon">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+              </svg>
+            </div>
+            <div class="role-name">Teacher</div>
+          </div>
+
+          <div class="role-card" data-role="admin">
+            <div class="role-icon">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div class="role-name">Admin</div>
+          </div>
+
+          <div class="role-card" data-role="manager">
+            <div class="role-icon">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.8a1 1 0 01.894 1.79l-1.233.616 1.738 5.42a1 1 0 01-.285 1.05A3.989 3.989 0 0115 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.715-5.349L11 6.477V16h2a1 1 0 110 2H7a1 1 0 110-2h2V6.477L6.237 7.582l1.715 5.349a1 1 0 01-.285 1.05A3.989 3.989 0 015 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.738-5.42-1.233-.617a1 1 0 01.894-1.788l1.599.799L9 4.323V3a1 1 0 011-1z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div class="role-name">Manager</div>
+          </div>
+        </div>
+
+        <!-- Login Form -->
+        <form class="auth-form" id="loginForm">
+          <div class="form-group">
+            <label class="form-label required">Email or Username</label>
+            <input type="text" class="form-input" placeholder="Enter your email or username" data-login-email required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label required">Password</label>
+            <div class="input-wrapper">
+              <input type="password" class="form-input" id="passwordInput" placeholder="Enter your password" data-login-password required>
+              <button type="button" class="password-toggle" data-password-toggle>
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                  <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="remember-forgot">
+            <label class="form-checkbox">
+              <input type="checkbox">
+              <span>Remember me</span>
+            </label>
+            <a href="forgot-password.html" class="text-primary">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+        </form>
+
+        <div class="auth-divider">OR</div>
+
+        <a href="school-selector.html" class="btn btn-outline" style="width: 100%;">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"/>
+          </svg>
+          Select School First
+        </a>
+
+        <div class="auth-footer">
+          <p class="auth-footer-text">
+            Don't have a school account? 
+            <a href="manager-signup.html" class="text-primary font-medium">Register your school</a>
+          </p>
+          <p class="auth-footer-text" style="margin-top: var(--spacing-4); color: var(--color-text-tertiary);">
+            &copy; 2026 School Management System. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/ui-components.js"></script>
+  <script src="../js/tenant-theme.js"></script>
+  <script src="../js/pages/auth-pages.js"></script>
+  <script>
+    document.querySelector('[data-password-toggle]')?.addEventListener('click', () => {
+      const input = document.getElementById('passwordInput');
+      if (input) {
+        input.type = input.type === 'password' ? 'text' : 'password';
+      }
+    });
+  </script>
+</body>
+</html>
