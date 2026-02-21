@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (result.success) {
                 // Redirect to appropriate dashboard
+                this.showPopover("Logged In");
                 Auth.redirectToDashboard();
             } else {
                 showError('errorMessage', result.error || 'Login failed. Please try again.');
@@ -42,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitBtn.textContent = 'Login';
             }
         } catch (error) {
+            this.showPopover("An error occurred. Please try again.");
             showError('errorMessage', 'An error occurred. Please try again.');
             submitBtn.disabled = false;
             submitBtn.textContent = 'Login';

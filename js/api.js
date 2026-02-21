@@ -1,8 +1,8 @@
 // API Client for backend communication
 // Note: Update API_BASE_URL to match your backend URL
-const API_BASE_URL = 'http://localhost:5000/api'; // Change this to your backend URL
+const API_BASE_URL = config.API_BASE_URL; // Change this to your backend URL
 
-const ApiClient = {
+window.ApiClient  = {
     // Make HTTP request
     async request(endpoint, options = {}) {
         const url = `${API_BASE_URL}${endpoint}`;
@@ -19,7 +19,9 @@ const ApiClient = {
         
         const config = {
             ...options,
-            headers
+            headers,
+            mode: 'cors',
+            credentials: 'omit'
         };
         
         try {

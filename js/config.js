@@ -1,7 +1,7 @@
 // Configuration file
 const CONFIG = {
     // API Configuration
-    API_BASE_URL: 'http://localhost:5000/api', // Update this to your backend URL
+    API_BASE_URL: 'http://localhost:5275/api', 
     
     // Application Settings
     APP_NAME: 'School System',
