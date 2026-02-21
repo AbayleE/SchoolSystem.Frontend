@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select School - School Management System</title>
+  <link rel="stylesheet" href="../css/design-system.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    .school-selector-layout { min-height: 100vh; background: var(--color-bg-secondary); padding: var(--spacing-6); }
+    .school-header { text-align: center; padding: var(--spacing-8) 0; }
+    .school-title { font-size: var(--font-size-4xl); font-weight: var(--font-weight-bold); margin-bottom: var(--spacing-2); }
+    .school-subtitle { color: var(--color-text-secondary); font-size: var(--font-size-lg); }
+    .school-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--spacing-6); }
+    .school-card { background: var(--color-bg-primary); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: var(--spacing-6); cursor: pointer; transition: all var(--transition-base); border: 2px solid transparent; }
+    .school-card:hover { border-color: var(--color-primary); box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+    .school-logo { width: 80px; height: 80px; margin: 0 auto var(--spacing-4); border-radius: var(--radius-md); object-fit: contain; background: var(--color-bg-secondary); }
+    .school-name { font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold); text-align: center; margin-bottom: var(--spacing-2); }
+    .school-info { display: flex; flex-direction: column; gap: var(--spacing-2); }
+    .school-info-item { display: flex; align-items: center; gap: var(--spacing-2); font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+  </style>
+</head>
+<body>
+  <div class="school-selector-layout">
+    <div class="school-header">
+      <h1 class="school-title">Select Your School</h1>
+      <p class="school-subtitle">Choose your school to continue</p>
+      <div style="max-width: 480px; margin: var(--spacing-6) auto 0;">
+        <input type="text" class="form-input" id="schoolSearch" placeholder="Search schools by name, city, or code">
+      </div>
+    </div>
+    
+    <div class="school-grid" id="schoolGrid"></div>
+
+    <div style="text-align: center; margin-top: var(--spacing-10);">
+      <a href="login-new.html" class="btn btn-ghost">Back to Login</a>
+    </div>
+  </div>
+  
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/ui-components.js"></script>
+  <script src="../js/tenant-theme.js"></script>
+  <script src="../js/pages/auth-pages.js"></script>
+</body>
+</html>

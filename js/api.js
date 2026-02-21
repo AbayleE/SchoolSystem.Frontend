@@ -1,6 +1,6 @@
 // API Client for backend communication
 // Note: Update API_BASE_URL to match your backend URL
-const API_BASE_URL = config.API_BASE_URL; // Change this to your backend URL
+const API_BASE_URL = (window.APP_CONFIG && window.APP_CONFIG.API_BASE_URL) ? window.APP_CONFIG.API_BASE_URL : 'http://localhost:5275/api';
 
 window.ApiClient  = {
     // Make HTTP request
@@ -89,6 +89,15 @@ window.ApiClient  = {
         
         validateInvitation(code) {
             return ApiClient.post('/auth/validate-invitation', { code });
+        },
+
+        requestPasswordReset(email) {
+            return ApiClient.post('/auth/forgot-password', { email });
+        },
+
+        resetPassword(payload) {
+            return ApiClient.post('/auth/reset-password', payload);
+        }
         }
     },
     
@@ -143,6 +152,14 @@ window.ApiClient  = {
         
         delete(id) {
             return ApiClient.delete(`/schools/${id}`);
+        },
+
+        search(query) {
+            return ApiClient.get(`/schools/search?query=${encodeURIComponent(query)}`);
+        },
+
+        getTheme(id) {
+            return ApiClient.get(`/schools/${id}/theme`);
         }
     },
     
@@ -166,6 +183,46 @@ window.ApiClient  = {
         
         delete(id) {
             return ApiClient.delete(`/students/${id}`);
+        },
+
+        getMe() {
+            return ApiClient.get('/students/me');
+        },
+
+        getDashboard() {
+            return ApiClient.get('/students/me/dashboard');
+        },
+
+        getTimetable(date) {
+            const query = date ? `?date=${encodeURIComponent(date)}` : '';
+            return ApiClient.get(`/students/me/timetable${query}`);
+        },
+
+        getAssignments(params = {}) {
+            const query = new URLSearchParams(params).toString();
+            return ApiClient.get(`/students/me/assignments${query ? `?${query}` : ''}`);
+        },
+
+        getGrades(params = {}) {
+            const query = new URLSearchParams(params).toString();
+            return ApiClient.get(`/students/me/grades${query ? `?${query}` : ''}`);
+        },
+
+        getAttendance(params = {}) {
+            const query = new URLSearchParams(params).toString();
+            return ApiClient.get(`/students/me/attendance${query ? `?${query}` : ''}`);
+        },
+
+        getNotifications() {
+            return ApiClient.get('/students/me/notifications');
+        },
+
+        getMessages() {
+            return ApiClient.get('/students/me/messages');
+        },
+
+        getFees() {
+            return ApiClient.get('/students/me/fees');
         }
     },
     
@@ -189,6 +246,49 @@ window.ApiClient  = {
         
         delete(id) {
             return ApiClient.delete(`/teachers/${id}`);
+        },
+
+        getMe() {
+            return ApiClient.get('/teachers/me');
+        },
+
+        getDashboard() {
+            return ApiClient.get('/teachers/me/dashboard');
+        },
+
+        getTimetable(date) {
+            const query = date ? `?date=${encodeURIComponent(date)}` : '';
+            return ApiClient.get(`/teachers/me/timetable${query}`);
+        },
+
+        getClasses() {
+            return ApiClient.get('/teachers/me/classes');
+        },
+
+        getAssignments(params = {}) {
+            const query = new URLSearchParams(params).toString();
+            return ApiClient.get(`/teachers/me/assignments${query ? `?${query}` : ''}`);
+        },
+
+        createAssignment(payload) {
+            return ApiClient.post('/teachers/me/assignments', payload);
+        },
+
+        getAttendance(classId, date) {
+            const query = new URLSearchParams({ date }).toString();
+            return ApiClient.get(`/teachers/me/classes/${classId}/attendance${query ? `?${query}` : ''}`);
+        },
+
+        markAttendance(classId, payload) {
+            return ApiClient.post(`/teachers/me/classes/${classId}/attendance`, payload);
+        },
+
+        getGrades(classId) {
+            return ApiClient.get(`/teachers/me/classes/${classId}/grades`);
+        },
+
+        submitGrades(classId, payload) {
+            return ApiClient.post(`/teachers/me/classes/${classId}/grades`, payload);
         }
     },
     
@@ -212,6 +312,174 @@ window.ApiClient  = {
         
         delete(id) {
             return ApiClient.delete(`/classes/${id}`);
+        },
+
+        getStudents(id) {
+            return ApiClient.get(`/classes/${id}/students`);
+        },
+
+        getTimetable(id) {
+            return ApiClient.get(`/classes/${id}/timetable`);
+        }
+    },
+
+    // Assignments endpoints
+    assignments: {
+        getAll(params = {}) {
+            const query = new URLSearchParams(params).toString();
+            return ApiClient.get(`/assignments${query ? `?${query}` : ''}`);
+        },
+
+        getById(id) {
+            return ApiClient.get(`/assignments/${id}`);
+        },
+
+        create(data) {
+            return ApiClient.post('/assignments', data);
+        },
+
+        update(id, data) {
+            return ApiClient.put(`/assignments/${id}`, data);
+        },
+
+        submit(id, data) {
+            return ApiClient.post(`/assignments/${id}/submit`, data);
+        }
+    },
+
+    // Grades endpoints
+    grades: {
+        getAll(params = {}) {
+            const query = new URLSearchParams(params).toString();
+            return ApiClient.get(`/grades${query ? `?${query}` : ''}`);
+        },
+
+        submit(data) {
+            return ApiClient.post('/grades', data);
+        }
+    },
+
+    // Attendance endpoints
+    attendance: {
+        getAll(params = {}) {
+            const query = new URLSearchParams(params).toString();
+            return ApiClient.get(`/attendance${query ? `?${query}` : ''}`);
+        },
+
+        mark(data) {
+            return ApiClient.post('/attendance', data);
+        }
+    },
+
+    // Notifications endpoints
+    notifications: {
+        getAll() {
+            return ApiClient.get('/notifications');
+        },
+
+        markRead(id) {
+            return ApiClient.put(`/notifications/${id}/read`, {});
+        }
+    },
+
+    // Messaging endpoints
+    messages: {
+        getThreads() {
+            return ApiClient.get('/messages/threads');
+        },
+
+        getThread(id) {
+            return ApiClient.get(`/messages/threads/${id}`);
+        },
+
+        send(data) {
+            return ApiClient.post('/messages', data);
+        }
+    },
+
+    // Announcements endpoints
+    announcements: {
+        getAll() {
+            return ApiClient.get('/announcements');
+        },
+
+        create(data) {
+            return ApiClient.post('/announcements', data);
+        }
+    },
+
+    // Calendar / Events endpoints
+    calendar: {
+        getEvents(params = {}) {
+            const query = new URLSearchParams(params).toString();
+            return ApiClient.get(`/calendar/events${query ? `?${query}` : ''}`);
+        },
+
+        createEvent(data) {
+            return ApiClient.post('/calendar/events', data);
+        }
+    },
+
+    // Fees & Billing endpoints
+    fees: {
+        getAll(params = {}) {
+            const query = new URLSearchParams(params).toString();
+            return ApiClient.get(`/fees${query ? `?${query}` : ''}`);
+        },
+
+        pay(data) {
+            return ApiClient.post('/fees/payments', data);
+        }
+    },
+
+    // Reports endpoints
+    reports: {
+        getAll(params = {}) {
+            const query = new URLSearchParams(params).toString();
+            return ApiClient.get(`/reports${query ? `?${query}` : ''}`);
+        },
+
+        export(data) {
+            return ApiClient.post('/reports/export', data);
+        }
+    },
+
+    // Analytics endpoints
+    analytics: {
+        getUsage(params = {}) {
+            const query = new URLSearchParams(params).toString();
+            return ApiClient.get(`/analytics/usage${query ? `?${query}` : ''}`);
+        }
+    },
+
+    // Subscription & Billing endpoints (Manager)
+    billing: {
+        getSubscription() {
+            return ApiClient.get('/billing/subscription');
+        },
+
+        getInvoices() {
+            return ApiClient.get('/billing/invoices');
+        }
+    },
+
+    // Audit Logs
+    auditLogs: {
+        getAll(params = {}) {
+            const query = new URLSearchParams(params).toString();
+            return ApiClient.get(`/audit-logs${query ? `?${query}` : ''}`);
+        }
+    },
+
+    // Settings
+    settings: {
+        getAll() {
+            return ApiClient.get('/settings');
+        },
+
+        update(data) {
+            return ApiClient.put('/settings', data);
+        }
         }
     }
 };
